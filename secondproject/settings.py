@@ -127,14 +127,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 #     BASE_DIR /"static",
 # ]
 
-# AWS Configuration
-# AWS_ACCESS_KEY_ID = 'AKIARNH65J4IWHIOOGWB'
-# AWS_SECRET_ACCESS_KEY = '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'
-
-# AWS_STORAGE_BUCKET_NAME = 'kitchen-bkt-1'
-# AWS_S3_CUSSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-# AWS_S3_FILE_OVERWRITE = False
-
 # STORAGES = {
 
 #     # Media file (image) management
