@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Kitchen</title>
+</head>
+<body>
+    <center>
+        <h1>Dcomforters' Honeymoon Gardens</h1>
+        <h3 style="background-color: #EE9972;">Welcome to The Kitchen. Here, we serve you cuisines that will suit your tastebuds.<br>
+            You can look through our menu and place your order whenever you are ready.</h3>
+    </center>
+    <h2>Kitchen Menu</h2>
+    
+    <ul>
+        {% for item in menu %}
+            <li><a href="menu_details/{{ item.id }}">{{ item.food_name }} - {{ item.cuisine }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ menu.food_name }} - {{ menu.cuisine }}</title>
+</head>
+    <body>
+        <h1> {{ menu.food_name }} - {{ menu.cuisine }}</h1>
+
+        <p>Items: {{ menu.items }}</p>
+        <p>Price: {{ menu.price }}</p>
+        <p>Prep Time: {{ menu.prep_time }}</p>
+        <p>Calories: {{ menu.calories }}</p>
+
+        <p>Back to  <a href="/kitchen">The Kitchen</a></p>
+    </body>
+</html>
+
+<!-- form_view/reservation.html -->
+
+<html>
+<body>
+    
+    <center><h1>Dcomforter's Honeymoon Gardens</h1></center>
+    <center><h3>Make a Reservation</h></center>
+    <form action = "" method = "post" style="background-color: bisque;">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Submit">
+    </form>
+    
+</body>
+<html>

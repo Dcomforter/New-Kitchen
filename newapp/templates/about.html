@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<section>
+  <article>
+    <h1>About Us</h1>
+    <!--Begin row-->
+    <div class="row">
+      <!--Begin col-->
+      <div class="column">
+        <p>
+          Based in Destin, Florida, Dcomforters' Kitchen is a family owned
+          Nigerian Restaurant, focused not only on serving but also providing excellent experience
+          to our prestigious customers. 
+        </p>
+        <p>
+          Our chefs draw inspiration from Nigerian, Western African, and Intercontinental dishes
+          and have a menu of about 10 items that they rotate seasonally.
+        </p>
+
+        <p>
+          The kitchen has a rustic and relaxed atmosphere with moderate
+          prices, making it a go-to place for a meal any time of the day.
+        </p>
+
+        <p>
+          Dcomforters' Kitchen is owned by a Nigerian couple, Israel and Precious, who
+          moved to the United States to pursue their shared dream of providing excellent
+          services to the world around them.
+        </p>
+
+        <p>
+          Our goal is to remain at the forefront of providing excellent services to everyone who comes 
+          visiting us and ensure that they have an experience that is beyond just suppressing their hunger
+          with a meal.
+        </p>
+      </div>
+      <!--End col-->
+
+      <!--Begin col-->
+      <div class="column">
+        <figure class="figure">
+          <img
+            src="{% static 'img/Israel-and-Precious.jpg' %}"
+            alt="Israel and Precious"
+          />
+          <figcaption class="figure-caption">
+            Dcomforters' Kitchen owners, Israel and Precious.
+          </figcaption>
+        </figure>
+      </div>
+      <!--End col-->
+    </div>
+    <!--End row-->
+  </article>
+</section>
+{% endblock %}

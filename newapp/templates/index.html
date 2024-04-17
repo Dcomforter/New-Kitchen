@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <section>
+    <article id="hero">
+      <h1 class="heading_shadow">SPECIAL OFFER</h1>
+      <p>
+        30% Off Reservations This Weekend 
+      </p>
+      <a href="{% url 'reservation' %}" class="cta"> Reserve now </a>
+    </article>
+  </section>
+  <section>
+    <article>
+      <h2>Our New Menu</h2>
+      <img src="{% static 'img/jollof_rice.jpg' %}">
+      <p>
+        Our menu consists of different seasonal items based on Nigerian, African, and Intercontinental dishes.
+      </p>
+      <p>
+        <a href="{% url 'kitchen' %}">See our new menu items</a>
+      </p>
+    </article>
+    <article>
+      <h2>Book a Table</h2>
+      <img src="{% static 'img/beans_plantain.jpg' %}">
+      <p>
+        Reserve your table for an Intercontinental dining experience, you will surely love every bit of the bite.
+      </p>
+      <p>
+        <a href="{% url 'reservation' %}">Make a Reservation </a>
+      </p>
+    </article>
+    <article>
+      <h2>Opening Hours</h2>
+      <img src="{% static 'img/white_rice.jpg' %}">
+      <p>
+        Dcomforters' Kitchen is open 6 days a week, and also closed on public holidays.
+      </p>
+      <ul>
+        <li>Mon - Fri: 2pm - 10pm</li>
+        <li>Sat: 2pm - 11pm</li>
+        <li>Sun: 3pm - 9pm</li>
+      </ul>
+    </article>
+  </section>
+{% endblock %}
