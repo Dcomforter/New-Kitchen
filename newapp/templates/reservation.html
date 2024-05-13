@@ -11,7 +11,7 @@
         {% if not reservation_successful %}
         <h1>Make Your Reservation</h1>
         <form action="" method="post">
-          <!--{% csrf_token %}-->
+          {% csrf_token %}
           {{form.as_p}}
           <input type="submit" id="button">
         </form>
