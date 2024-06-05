@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   django:
-    image: kitch:4.0
+    image: dockerized
     container_name: kitch-cont
     build: .
     command: python manage.py runserver 0.0.0.0:8000
