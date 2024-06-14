@@ -6,15 +6,30 @@ services:
     container_name: kitch-cont
     build: .
     command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/mykitchen
     ports:
       - 8000:8000
-  #   depends_on:
-  #     - pgdb
-  # pgdb:
-  #   image: postgres
-  #   container_name: pgdb
-  #   environment:
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres 
+    depends_on:
+      - db
+
+  test:
+    build: .
+    command: python manage.py test
+    volumes:
+      - .:/mykitchen
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mykitchen
+      POSTGRES_USER: mykitchenuser
+      POSTGRES_PASSWORD: mykitchenpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
 
