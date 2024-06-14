@@ -1,3 +1,57 @@
 from django.test import TestCase
+from .models import Booking, Menu
+from django_countries.fields import Country
 
-# Create your tests here.
+class BookingModelTest(TestCase):
+
+    def setUp(self):
+        self.booking = Booking.objects.create(
+            first_name="John",
+            last_name="Doe",
+            sex="Male",
+            email="john.doe@example.com",
+            phone_number="1234567890",
+            guest_count=2,
+            country="US",
+            comments="Looking forward to it!",
+        )
+
+    def test_booking_creation(self):
+        self.assertTrue(isinstance(self.booking, Booking))
+        self.assertEqual(self.booking.__str__(), "John : Doe : Male : 2 :US")
+
+    def test_booking_fields(self):
+        self.assertEqual(self.booking.first_name, "John")
+        self.assertEqual(self.booking.last_name, "Doe")
+        self.assertEqual(self.booking.sex, "Male")
+        self.assertEqual(self.booking.email, "john.doe@example.com")
+        self.assertEqual(self.booking.phone_number, "1234567890")
+        self.assertEqual(self.booking.guest_count, 2)
+        self.assertEqual(self.booking.country, Country("US"))
+        self.assertEqual(self.booking.comments, "Looking forward to it!")
+        self.assertIsNotNone(self.booking.date)
+        self.assertIsNotNone(self.booking.time)
+
+class MenuModelTest(TestCase):
+
+    def setUp(self):
+        self.menu_item = Menu.objects.create(
+            food_name="Spaghetti Bolognese",
+            cuisine="Italian",
+            item_description="A classic Italian pasta dish",
+            price=12.99,
+            prep_time=30,
+            calories=850
+        )
+
+    def test_menu_creation(self):
+        self.assertTrue(isinstance(self.menu_item, Menu))
+        self.assertEqual(self.menu_item.__str__(), "Spaghetti Bolognese : Italian : 12.99 : 30 : 850")
+
+    def test_menu_fields(self):
+        self.assertEqual(self.menu_item.food_name, "Spaghetti Bolognese")
+        self.assertEqual(self.menu_item.cuisine, "Italian")
+        self.assertEqual(self.menu_item.item_description, "A classic Italian pasta dish")
+        self.assertEqual(self.menu_item.price, 12.99)
+        self.assertEqual(self.menu_item.prep_time, 30)
+        self.assertEqual(self.menu_item.calories, 850)
