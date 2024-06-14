@@ -6,11 +6,11 @@ class BookingModelTest(TestCase):
 
     def setUp(self):
         self.booking = Booking.objects.create(
-            first_name="John",
-            last_name="Doe",
+            first_name="Jenkins",
+            last_name="User",
             sex="Male",
-            email="john.doe@example.com",
-            phone_number="1234567890",
+            email="jenkins.user@jenkins.com",
+            phone_number="6626547845",
             guest_count=2,
             country="US",
             comments="Looking forward to it!",
@@ -18,14 +18,14 @@ class BookingModelTest(TestCase):
 
     def test_booking_creation(self):
         self.assertTrue(isinstance(self.booking, Booking))
-        self.assertEqual(self.booking.__str__(), "John : Doe : Male : 2 :US")
+        self.assertEqual(self.booking.__str__(), "Jenkins : User : Male : 2 :US")
 
     def test_booking_fields(self):
-        self.assertEqual(self.booking.first_name, "John")
-        self.assertEqual(self.booking.last_name, "Doe")
+        self.assertEqual(self.booking.first_name, "Jenkins")
+        self.assertEqual(self.booking.last_name, "User")
         self.assertEqual(self.booking.sex, "Male")
-        self.assertEqual(self.booking.email, "john.doe@example.com")
-        self.assertEqual(self.booking.phone_number, "1234567890")
+        self.assertEqual(self.booking.email, "jenkins.user@jenkins.com")
+        self.assertEqual(self.booking.phone_number, "6626547845")
         self.assertEqual(self.booking.guest_count, 2)
         self.assertEqual(self.booking.country, Country("US"))
         self.assertEqual(self.booking.comments, "Looking forward to it!")
