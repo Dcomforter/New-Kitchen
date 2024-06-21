@@ -1,0 +1,26 @@
+sudo apt-get update
+
+# Install the NFS Kernel server on your system
+sudo apt install nfs-kernel-server -y
+
+# Create the export directory
+sudo mkdir -p /mnt/share/
+
+# Remove restrictive permissions
+sudo chown nobody:nogroup /mnt/share/
+sudo chmod 777 /mnt/share/
+
+# Assign server access to clients through NFS export file
+sudo vi /etc/exports
+/mnt/share/ *(rw,sync,no_subtree_check,no_root_squash)
+
+# Export the shared directory and restart the service
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+
+# Open firewall port for the clients
+2049
+
+# Configure the client machine
+sudo apt-get update
+sudo apt-get install nfs-common -y
