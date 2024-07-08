@@ -1,0 +1,14 @@
+#!/bin/bash
+
+JENKINS_URL='http://164.92.83.156:8080'
+JOB_NAME='Pipeline'
+USER='jenkins-user'
+TOKEN='11ca53831953817fb1b4c759a83f995d23'
+
+# Get the CSRF token
+CRUMB=$(curl -s "$JENKINS_URL/crumbIssuer/api/json" --user "$USER:$TOKEN" | jq -r '.crumb')
+
+# Trigger the build
+curl -X POST "$JENKINS_URL/job/$JOB_NAME/build" \
+     --user "$USER:$TOKEN" \
+     --header "Jenkins-Crumb:$CRUMB"
