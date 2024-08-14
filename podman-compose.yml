@@ -12,4 +12,5 @@ services:
       - .:/mykitchen:z
     ports:
       - 8600:8000
+    restart: always
 
