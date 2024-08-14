@@ -7,8 +7,9 @@ services:
     build:
       context: .
       dockerfile: Containerfile
-      command: python manage.py runserver 0.0.0.0:8000
-      volumes:
-        - .:/mykitchen:z
-      ports:
-        - 8600:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/mykitchen:z
+    ports:
+      - 8600:8000
+
