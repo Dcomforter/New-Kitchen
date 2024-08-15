@@ -17,7 +17,7 @@ pipeline {
         stage('Remove Old Container') {
             steps {
                 // sh "podman stop ${CONTAINER} && podman rm ${CONTAINER}"
-                #sh "podman-compose down"
+                //sh "podman-compose down"
 		sh "podman compose down"
             }
         }
