@@ -1,39 +1,55 @@
+
 pipeline {
     agent any
+    
+    environment{
+        IMAGE="kitch-image:7.0"
+        CONTAINER="kitch-pod"
+    }
+
     stages {
-        stage("Clone Repository") {
+        stage('Clone Repository') {
             steps {
-                echo "Cloning the Repository"
-                // git url: "https://github.com/Dcomforter/New-Kitchen.git", branch: "master"
+                git url: "https://github.com/Dcomforter/New-Kitchen.git"
             }
         }
-        stage("Build Image") {
+        
+        stage('Remove Old Container') {
             steps {
-                echo "Building the Docker image"
-                sh "docker build -t my-kitchen ."
+                // sh "podman stop ${CONTAINER} && podman rm ${CONTAINER}"
+                sh "podman-compose down"
             }
         }
-        // stage("Push to DockerHub") {
+        
+        // stage('Remove Old Image') {
         //     steps {
-        //         echo "Pushing the Docker image to Docker Hub"
-        //         withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
-        //             sh "docker tag my-kitchen ${env.dockerHubUser}/my-kitchen"
-        //             sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-        //             sh "docker push ${env.dockerHubUser}/my-kitchen"
-        //         }
+        //         sh "podman rmi ${IMAGE}"
         //     }
         // }
-        // stage("Deploy to Production") {
+        
+        // stage('Build Image') {
         //     steps {
-        //         echo "Deploying the container"
-        //         sh "docker-compose down && docker-compose up -d"
-        //     }
-        // }        
-        // stage("Slack Notification") {
-        //     steps {
-        //         echo "Sending Slack Notification"
-        //         slackSend(message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}, Status: ${currentBuild.currentResult}, Build URL: ${env.BUILD_URL}")
+        //         sh "podman build -t ${IMAGE} ."
         //     }
         // }
+        
+        stage('Run Container') {
+            steps {
+                // sh "podman run -d -p 8600:8000 --name ${CONTAINER} ${IMAGE}"
+                sh "podman-compose up -d --build"
+            }
+        }
+    }
+    
+    post {
+        
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed."
+        }
     }
 }
+
+
