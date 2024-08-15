@@ -17,7 +17,8 @@ pipeline {
         stage('Remove Old Container') {
             steps {
                 // sh "podman stop ${CONTAINER} && podman rm ${CONTAINER}"
-                sh "podman-compose down"
+                #sh "podman-compose down"
+		sh "podman compose down"
             }
         }
         
@@ -36,7 +37,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 // sh "podman run -d -p 8600:8000 --name ${CONTAINER} ${IMAGE}"
-                sh "podman-compose up -d --build"
+                sh "podman compose up -d --build"
             }
         }
     }
