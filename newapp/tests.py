@@ -36,9 +36,9 @@ class MenuModelTest(TestCase):
 
     def setUp(self):
         self.menu_item = Menu.objects.create(
-            food_name="Spaghetti Bolognese",
-            cuisine="Italian",
-            item_description="A classic Italian pasta dish",
+            food_name="Jollof Rice",
+            cuisine="Western African",
+            item_description="A classic Western African dish",
             price=12.99,
             prep_time=30,
             calories=850
@@ -50,8 +50,8 @@ class MenuModelTest(TestCase):
 
     def test_menu_fields(self):
         self.assertEqual(self.menu_item.food_name, "Spaghetti Bolognese")
-        self.assertEqual(self.menu_item.cuisine, "Italian")
-        self.assertEqual(self.menu_item.item_description, "A classic Italian pasta dish")
+        self.assertEqual(self.menu_item.cuisine, "Western African")
+        self.assertEqual(self.menu_item.item_description, "A classic Western African dish")
         self.assertEqual(self.menu_item.price, 12.99)
         self.assertEqual(self.menu_item.prep_time, 30)
         self.assertEqual(self.menu_item.calories, 850)
