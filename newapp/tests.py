@@ -46,10 +46,10 @@ class MenuModelTest(TestCase):
 
     def test_menu_creation(self):
         self.assertTrue(isinstance(self.menu_item, Menu))
-        self.assertEqual(self.menu_item.__str__(), "Spaghetti Bolognese : Italian : 12.99 : 30 : 850")
+        self.assertEqual(self.menu_item.__str__(), "Jollof Rice : Western African : 12.99 : 30 : 850")
 
     def test_menu_fields(self):
-        self.assertEqual(self.menu_item.food_name, "Spaghetti Bolognese")
+        self.assertEqual(self.menu_item.food_name, "Jollof Rice")
         self.assertEqual(self.menu_item.cuisine, "Western African")
         self.assertEqual(self.menu_item.item_description, "A classic Western African dish")
         self.assertEqual(self.menu_item.price, 12.99)
