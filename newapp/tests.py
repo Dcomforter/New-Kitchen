@@ -25,7 +25,7 @@ class BookingModelTest(TestCase):
         self.assertEqual(self.booking.last_name, "User")
         self.assertEqual(self.booking.sex, "Male")
         self.assertEqual(self.booking.email, "jenkins.user@jenkins.com")
-        self.assertEqual(self.booking.phone_number, "6626547845")
+        self.assertEqual(self.booking.phone_number, "4025639856")
         self.assertEqual(self.booking.guest_count, 2)
         self.assertEqual(self.booking.country, Country("US"))
         self.assertEqual(self.booking.comments, "Looking forward to it!")
