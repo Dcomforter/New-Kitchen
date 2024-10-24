@@ -10,7 +10,7 @@ class BookingModelTest(TestCase):
             last_name="User",
             sex="Male",
             email="jenkins.user@jenkins.com",
-            phone_number="6626547845",
+            phone_number="4025639856",
             guest_count=2,
             country="US",
             comments="Looking forward to it!",
