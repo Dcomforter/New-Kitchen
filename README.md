@@ -77,6 +77,9 @@ Dcomforters' Kitchen is a dynamic web application built with Django, offering a 
 - **Bootstrap:** Front-end framework for responsive and modern design.
 - **Pipenv:** Dependency management tool for Python projects.
 
+## Technologies Used For Deployment
+- **Jenkins:** Jenkins was used to create a CICD pipeline, which tests, builds, and then deploys the containerized application to a production environment.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
