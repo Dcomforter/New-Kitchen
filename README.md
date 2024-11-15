@@ -76,6 +76,9 @@ Dcomforters' Kitchen is a dynamic web application built with Django, offering a 
 - **SQLite:** Lightweight and easy-to-use database for development.
 - **Bootstrap:** Front-end framework for responsive and modern design.
 - **Pipenv:** Dependency management tool for Python projects.
+- **JavaScript:** For interactive and dynamic front-end functionality.
+- **HTML:** For creating the structure and layout of web pages.
+- **CSS:** For styling and visual design of the web interface.
 
 ## Technologies Used For Deployment to Production
 - **Jenkins:** Jenkins was used to create a CICD pipeline, which tested, built, and deployed the containerized image to Docker Registry.
