@@ -83,8 +83,8 @@ Dcomforters' Kitchen is a dynamic web application built with Django, offering a 
 ## Technologies Used For Deployment to Production
 - **Jenkins:** Used to create a CI/CD pipeline. The pipeline tested the application, built a Docker image, and deployed it to a Docker Registry. Automates the integration and deployment process.
 - **Docker:** Packaged the application and its dependencies into a containerized image, making it portable and consistent across different environments.
-- **Kubernetes:** Kubernetes was used to pull the image from Docker Registry and deployed to AWS and GCP using EKS and GKE respectively.
-- **Terraform:** The cloud environment was set up using IaC (Terraform) to set up a production-ready Kubernetes cluster on AWS and GCP.
+- **Kubernetes:** Orchestrated and managed the deployment of the Dockerized application. Pulled the image from the Docker Registry and deployed it to production environments on AWS using Elastic Kubernetes Service (EKS) and on GCP using Google Kubernetes Engine (GKE).
+- **Terraform:** Implemented Infrastructure as Code (IaC) to provision production-ready Kubernetes clusters on AWS and GCP, ensuring an automated and consistent cloud environment setup.
 
 
 ## License
