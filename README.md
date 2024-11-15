@@ -78,8 +78,10 @@ Dcomforters' Kitchen is a dynamic web application built with Django, offering a 
 - **Pipenv:** Dependency management tool for Python projects.
 
 ## Technologies Used For Deployment to Production
-- **Jenkins:** Jenkins was used to create a CICD pipeline, which tests, builds, and then deploys the containerized application to a production environment.
-- **Docker:** The application and its dependencies were packaged into a Docker image within the pipeline job in Jenkins
+- **Jenkins:** Jenkins was used to create a CICD pipeline, which tested, built, and deployed the containerized image to Docker Registry.
+- **Docker:** The application and its dependencies were packaged into a Docker image within the pipeline job in Jenkins.
+- **Kubernetes:** Kubernetes was used to pull the image from Docker Registry and deployed to AWS and GCP using EKS and GKE respectively.
+- 
 
 
 ## License
