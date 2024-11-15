@@ -2,7 +2,7 @@
 
 ![Dcomforters' Kitchen Logo](secondproject/newapp/static/img/DK_logo.png)
 
-Dcomforters' Kitchen is a dynamic web application built with Django, offering a platform for managing, exploring, and reserving a table at an African Restaurant serving a variety of delightful menus. Whether you are a Full Stack, BackEnd or FrontEnd Developer, this project provides an opportunity to see how all these are put together to design this dynamic application.
+Dcomforters' Kitchen is a dynamic web application built with Django, offering a platform for managing, exploring, and reserving a table at an African Restaurant serving a variety of delightful intercontinental menus. Whether you are a Full Stack, BackEnd or FrontEnd Developer, this project provides an opportunity to see how all these are put together to design this dynamic application.
 
 ## Features
 
