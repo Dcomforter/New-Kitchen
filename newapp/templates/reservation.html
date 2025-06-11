@@ -9,7 +9,7 @@
       <!--Begin col-->
       <div class="column">
         {% if not reservation_successful %}
-        <h1>Reservation a Table Now!!!</h1>
+        <h1>Reserve a Table Now!!!</h1>
         <form action="" method="post">
           {% csrf_token %}
           {{form.as_p}}
