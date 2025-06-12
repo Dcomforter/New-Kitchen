@@ -155,12 +155,29 @@ input{
   }
 
 #hero {
-    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), url('../img/restaurant_inside.jpg');
-    background-size: cover;
-    background-position: 75%;
-    color: white;
-    min-height: 200px;
-    text-align: center;;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.4), 
+      rgba(0, 0, 0, 0.6)
+    ),
+    url('../img/restaurant_inside.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+.overlay-content {
+  max-width: 700px;
+}
+
+.heading-shadow {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 #hero p {
