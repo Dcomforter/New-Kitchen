@@ -321,7 +321,7 @@ footer p {
 .cta-button {
   display: inline-block;
   margin-top: 1rem;
-  background: #e67e22;
+  background: #1d2520;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -330,7 +330,7 @@ footer p {
 }
 
 .cta-button:hover {
-  background: #cf711f;
+  background: #52463b44;
 }
 
 /* Animations */
