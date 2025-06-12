@@ -2,16 +2,11 @@
 {% load static %}
 
 {% block content %}
-  <section id="special-offer" aria-label="Summer Promotion">
-    <div class="hero-container">
-      <div class="hero-text">
-        <h1 class="heading-shadow animate-fade">Special Summer Offer</h1>
-        <p>Swoop in on our <strong>30% off</strong> reservations throughout summer weekends.</p>
-        <a href="{% url 'reservation' %}" class="cta-button animate-bounce">Reserve Now</a>
-      </div>
-      <div class="hero-image">
-        <img src="{% static 'img/restaurant_inside.jpg' %}" alt="Summer dining special">
-      </div>
+  <section id="hero">
+    <div class="overlay-content">
+      <h1 class="heading-shadow animate-fade">Special Summer Offer</h1>
+      <p>Swoop in on our <strong>30% off</strong> reservations throughout summer weekends.</p>
+      <a href="{% url 'reservation' %}" class="cta-button animate-bounce">Reserve Now</a>
     </div>
   </section>
   <section>
