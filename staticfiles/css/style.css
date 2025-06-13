@@ -6,7 +6,6 @@ body {
     margin-right: 5%;
 }
 
-
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Markazi Text', serif;
     letter-spacing: 2px;;
@@ -350,4 +349,19 @@ footer p {
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
+}
+
+.menu-carousel img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.swiper-slide {
+  background: white;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
 }

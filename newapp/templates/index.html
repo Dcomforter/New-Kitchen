@@ -1,46 +1,40 @@
 {% extends 'base.html' %}
 {% load static %}
+<script src="{% static 'js/scroll-effects.js' %}" defer></script>
 
 {% block content %}
   <section id="hero">
     <div class="overlay-content">
       <h1 class="heading-shadow animate-fade">Special Summer Offer</h1>
       <p>Swoop in on our <strong>30% off</strong> reservations throughout summer weekends.</p>
-      <a href="{% url 'reservation' %}" class="cta-button animate-bounce">Reserve Now</a>
+      <!--<a href="{% url 'reservation' %}" class="cta-button animate-bounce">Reserve Now</a>-->
+      <a href="{% url 'reservation' %}" class="cta-button animate-bounce scroll-animate">Reserve Now</a>
+
     </div>
   </section>
-  <section>
-    <article>
-      <h2>Our Newest Menu</h2>
-      <img src="{% static 'img/jollof_rice.jpg' %}">
-      <p>
-        Our menu consists of different seasonal items based on Nigerian, African, and Intercontinental dishes.
-      </p>
-      <p>
-        <a href="{% url 'kitchen' %}">Check out our Wednesday Specials Today</a>
-      </p>
-    </article>
-    <article>
-      <h2>Reserve a Table Now</h2>
-      <img src="{% static 'img/beans_plantain.jpg' %}">
-      <p>
-        Reserve your table for an Intercontinental dining experience, you will surely love every bit of the bite.
-      </p>
-      <p>
-        <a href="{% url 'reservation' %}">Make a Reservation </a>
-      </p>
-    </article>
-    <article>
-      <h2>Opening Hours</h2>
-      <img src="{% static 'img/white_rice.jpg' %}">
-      <p>
-        Dcomforters' Kitchen is open 6 days a week, and also closed on public holidays.
-      </p>
-      <ul>
-        <li>Mon - Fri: 10am - 10pm</li>
-        <li>Sat: 11am - 9pm</li>
-        <!--<li>Sun: 3pm - 9pm</li>-->
-      </ul>
-    </article>
+  <section class="swiper-container menu-carousel">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="{% static 'img/jollof_rice.jpg' %}" alt="Jollof Rice">
+        <h2>Our Newest Menu</h2>
+        <p>Seasonal dishes based on Nigerian, African, and Intercontinental cuisine.</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'img/beans_plantain.jpg' %}" alt="Beans and Plantain">
+        <h2>Reserve a Table</h2>
+        <p>Experience an Intercontinental dining journey you’ll love.</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'img/white_rice.jpg' %}" alt="White Rice">
+        <h2>Opening Hours</h2>
+        <p>Dcomforters' Kitchen welcomes you 6 days a week.</p>
+      </div>
+    </div>
+
+    <!-- Optional: Pagination & Navigation -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </section>
+
 {% endblock %}
