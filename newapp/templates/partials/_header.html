@@ -1,12 +1,21 @@
 {% load static %}
 <header>
-  <img src="{% static 'img/banner.png' %}" />
+  <div class="nav-container">
+    <a href="{% url 'home' %}" class="logo">
+      <img src="{% static 'img/banner.png' %}" alt="Dcomforters' Kitchen Logo" />
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span class="hamburger"></span>
+    </button>
+
+    <nav class="main-nav">
+      <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'kitchen' %}">Kitchen Menu</a></li>
+        <li><a href="{% url 'reservation' %}">Reservation</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
-<nav>
-  <ul>
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'about' %}">About</a></li>
-    <li><a href="{% url 'kitchen' %}">Kitchen Menu</a></li>
-    <li><a href="{% url 'reservation' %}">Reservation</a></li>
-  </ul>
-</nav>
