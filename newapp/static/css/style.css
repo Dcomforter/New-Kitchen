@@ -470,6 +470,7 @@ footer p {
     display: none;
     padding: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 1000; /* 👈 Ensure it's on top of #hero */
   }
 
   .nav-links.nav-visible {

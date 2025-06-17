@@ -159,7 +159,7 @@ input{
       rgba(0, 0, 0, 0.6)
     ),
     url('../img/restaurant_inside.jpg');
-  background-size: auto;
+  background-size: cover;
   background-position: center;
   color: white;
   min-height: 300px;
