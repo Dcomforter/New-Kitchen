@@ -162,8 +162,8 @@ input{
   background-size: cover;
   background-position: center;
   color: white;
-  min-height: 500px;
-  display: grid;
+  min-height: 20px;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
