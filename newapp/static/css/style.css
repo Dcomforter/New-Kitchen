@@ -471,16 +471,7 @@ footer p {
     padding: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     z-index: 1000; /* 👈 Ensure it's on top of #hero */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-out;
   }
-
-  /* When menu is active */
-.nav-active {
-  display: flex;
-  max-height: 300px; /* Adjust based on content */
-}
 
   .nav-links.nav-visible {
     display: flex;

@@ -163,7 +163,7 @@ input{
   background-position: center;
   color: white;
   min-height: 300px;
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: center;
   text-align: center;
