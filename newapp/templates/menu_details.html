@@ -12,7 +12,7 @@
     <div class="menu-details-container">
       <div class="menu-image-large">
         {% if menu_item.image %}
-          <img src="newapp/static/img/menu_items/{{menu_item.food_name}}.jpg" alt="{{ menu_item.food_name}}" />
+          <img src="/static/img/menu_items/{{menu_item.food_name}}.jpg" alt="{{ menu_item.food_name}}" />
         {% else %}
           <img src="{% static 'img/default_dish.jpg' %}" alt="Default Image">
         {% endif %}
