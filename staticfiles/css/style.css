@@ -535,3 +535,69 @@ footer p {
   color: #888;
   font-size: 1rem;
 }
+
+.menu-details-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-top: 2rem;
+}
+
+.menu-image-large {
+  flex: 1 1 400px;
+}
+
+.menu-image-large img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.menu-info {
+  flex: 1 1 300px;
+  padding: 1rem;
+  background-color: #fff9f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.menu-info h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.menu-info h2 {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.menu-description {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.menu-price-large {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #495E57;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .menu-details-container {
+    flex-direction: column;
+  }
+
+  .menu-info h1 {
+    font-size: 2rem;
+  }
+}
