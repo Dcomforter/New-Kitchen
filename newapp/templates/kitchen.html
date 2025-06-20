@@ -4,17 +4,22 @@
 <section>
   <article>
     <h1>Our Menu</h1>
-    <div class="menu-grid">
-      {% for item in menu %}
-        <div class="menu-card">
-        <a href="{% url 'menu_details' item.id %}">
-            <img src="{% static 'img/menu_items/' %}{{ item.food_name }}.jpg" alt="{{ item.food_name }}">
-            <div class="menu-card-content">
-            <h3>{{ item.food_name }}</h3>
-            <p class="cuisine-type">{{ item.cuisine }}</p>
-            <p class="menu-price">${{ item.price }}</p>
+        <div class="menu-columns">
+        {% for item in menu %}
+            <div class="menu-item">
+            <div class="menu-image">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.food_name }}">
+                {% else %}
+                <img src="{% static 'img/default_image.jpg' %}" alt="Default Image">
+                {% endif %}
             </div>
-        </a>
+            <h2>{{ item.food_name }}</h2>
+            <p>{{ item.cuisine }}</p>
+            <span class="menu-price">${{ item.price }}</span>
+            <a href="{% url 'menu_details' item.id %}">View Details</a>
+            </div>
+        {% endfor %}
         </div>
       {% endfor %}
     </div>
