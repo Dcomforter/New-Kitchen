@@ -272,10 +272,10 @@ footer p {
 	height: 100%;
 }
 
-.menu-price{
+/*.menu-price{
     display: block;
     font-size: 1rem;
-}
+}*/
 
 @media (max-width: 800px) {
     section {
