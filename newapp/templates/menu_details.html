@@ -2,39 +2,30 @@
 {% load static %}
 {% block content %}
 <section>
-    <article>
-        <h1>Item Details</h1>
-        <span>
-            <a href="{% url 'home' %}">Home</a> /
-            <a href="{% url 'kitchen' %}">Kitchen Menu</a> /
-            <!-- Step: Replace code here -->
-            {{ menu_item.food_name }}
-        </span>
-        <!--Begin row-->
-        <div class="row">
-            <!--Begin col-->
-            <div class="column">
-                <h2>
-                    <!-- Add DTL variable for menu_item_name -->
-                    {{ menu_item.food_name }}
-                </h2>
-                <p>
-                    <!-- Add DTL variable for description -->
-                    {{ menu_item.item_description }}
-                </p>
-                <p>
-                    <!-- Add DTL variable for price -->
-                    Price: ${{ menu_item.price }}
-                </p>
-            </div>
-            <!--End col-->
-            <!--Begin col-->
-            <div class="column">
-                <img src="/static/img/menu_items/{{menu_item.food_name}}.jpg" alt="{{ menu_item.food_name}}" />
-            </div>
-            <!--End col-->
-        </div>
-        <!--End row-->
-    </article>
+  <article>
+    <div class="breadcrumb">
+      <a href="{% url 'home' %}">Home</a> /
+      <a href="{% url 'kitchen' %}">Kitchen Menu</a> /
+      {{ menu_item.food_name }}
+    </div>
+
+    <div class="menu-details-container">
+      <div class="menu-image-large">
+        {% if menu_item.image %}
+          <img src="{{ menu_item.image.url }}" alt="{{ menu_item.food_name }}">
+        {% else %}
+          <img src="{% static 'img/default_image.jpg' %}" alt="Default Image">
+        {% endif %}
+      </div>
+
+      <div class="menu-info">
+        <h1>{{ menu_item.food_name }}</h1>
+        <h2>Cuisine: {{ menu_item.cuisine }}</h2>
+        <p class="menu-description">{{ menu_item.item_description }}</p>
+        <p class="menu-price-large">Price: ${{ menu_item.price }}</p>
+        <a href="{% url 'reservation' %}" class="cta-button">Reserve a Table</a>
+      </div>
+    </div>
+  </article>
 </section>
 {% endblock %}
