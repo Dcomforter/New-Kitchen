@@ -7,18 +7,14 @@
     <div class="menu-grid">
       {% for item in menu %}
         <div class="menu-card">
-          <a href="{% url 'menu_details' item.id %}">
-            {% if item.image %}
-              <img src="{{ item.image.url }}" alt="{{ item.food_name }}">
-            {% else %}
-              <img src="{% static 'img/default_dish.jpg' %}" alt="Placeholder dish">
-            {% endif %}
+        <a href="{% url 'menu_details' item.id %}">
+            <img src="{% static 'img/menu_items/' %}{{ item.food_name }}.jpg" alt="{{ item.food_name }}">
             <div class="menu-card-content">
-              <h3>{{ item.food_name }}</h3>
-              <p class="cuisine-type">{{ item.cuisine }}</p>
-              <p class="menu-price">${{ item.price }}</p>
+            <h3>{{ item.food_name }}</h3>
+            <p class="cuisine-type">{{ item.cuisine }}</p>
+            <p class="menu-price">${{ item.price }}</p>
             </div>
-          </a>
+        </a>
         </div>
       {% endfor %}
     </div>
