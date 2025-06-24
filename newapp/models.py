@@ -53,4 +53,4 @@ class Order(models.Model):
     fulfilled = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.customer_name} - {self.menu.food_name}"
+        return f"{self.customer_name} - {self.menu_item.food_name}"
