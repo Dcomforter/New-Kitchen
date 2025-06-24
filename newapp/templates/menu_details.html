@@ -26,16 +26,22 @@
         <p class="menu-price-large">Price: ${{ menu_item.price }}</p>
         <a href="{% url 'reservation' %}" class="cta-button">Reserve a Table</a>
 
-        <h3>Place an Order</h3>
-        {% if order_success %}
-          <p class="success-msg">Your order was placed successfully!</p>
-        {% else %}
-          <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="cta-button" value="Place Order">
-          </form>
-        {% endif %}
+        <!-- Order Modal Trigger Button -->
+        <button class="cta-button" id="openOrderModal">Order Now</button>
+
+        <!-- Order Modal -->
+        <div id="orderModal" class="modal">
+          <div class="modal-content">
+            <span class="close" id="closeOrderModal">&times;</span>
+            <h2>Place Your Order</h2>
+            <form method="post" action="{% url 'place_order' menu_item.id %}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="cta-button">Submit Order</button>
+            </form>
+          </div>
+        </div>
+
       </div>
 
     </div>
