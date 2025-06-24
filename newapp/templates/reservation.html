@@ -2,39 +2,36 @@
 {% load static %}
 
 {% block content %}
-<section>
-  <article>
-    <!--Begin row-->
+<section class="reservation-section">
+  <article class="container">
     <div class="row">
-      <!--Begin col-->
-      <div class="column">
+      
+      <!-- Reservation Form -->
+      <div class="col-md-6 col-sm-12 reservation-form">
         {% if not reservation_successful %}
-        <h1>Reserve a Table Now!!!</h1>
-        <form action="" method="post">
+        <h2>Reserve a Table Now!</h2>
+        <form action="" method="post" class="form">
           {% csrf_token %}
-          {{form.as_p}}
-          <input type="submit" id="button">
+          {{ form.as_p }}
+          <button type="submit" id="button" class="btn">Submit</button>
         </form>
-        {% endif %}
-        {% if reservation_successful %}
-        <h1>Confirmation</h1>
-          <p>Reservation Successful!</p>
+        {% else %}
+        <h2>Confirmation</h2>
+        <p class="success-message">Reservation Successful!</p>
         {% endif %}
       </div>
-      <!--End col-->
 
-      <!--Begin col-->
-      <div class="column">
-        <div class="videowrap">
+      <!-- Google Maps Embed -->
+      <div class="col-md-6 col-sm-12 map-container">
+        <div class="embed-responsive embed-responsive-4by3">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d130960.83790283036!2d-86.61275057523757!3d30.396658008520536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88914379c940f4b7%3A0x17a48bdb46584c32!2sDestin%2C%20FL%2032541%2C%20USA!5e0!3m2!1sen!2spt!4v1699306117028!5m2!1sen!2spt" 
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d130960.83790283036!2d-86.61275057523757!3d30.396658008520536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88914379c940f4b7%3A0x17a48bdb46584c32!2sDestin%2C%20FL%2032541%2C%20USA!5e0!3m2!1sen!2spt!4v1699306117028!5m2!1sen!2spt"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
-      <!--End col-->
+
     </div>
-    <!--End row-->
   </article>
 </section>
 {% endblock %}
