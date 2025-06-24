@@ -349,6 +349,7 @@ footer p {
 .cta-button:hover {
   background-color: #52463b44; 
   transform: scale(1.03);
+  text-decoration: none; /* Prevent underline on hover */
 }
 
 /* Animations */
