@@ -68,3 +68,16 @@ def menu_details(request, item_id):
 #     context = {'menu_item' : menu}
 
 #     return HttpResponse(template.render(context, request))
+
+def place_order(request, item_id):
+    menu_item = get_object_or_404(Menu, id=item_id)
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.menu_item = menu_item
+            order.save()
+            return redirect('order_success')
+    else:
+        form = OrderForm()
+    return render(request, 'order_page.html', {'form': form})
