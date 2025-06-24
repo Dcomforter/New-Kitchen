@@ -317,7 +317,7 @@ footer p {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.cta-button {
+/*.cta-button {
   display: inline-block;
   margin-top: 1rem;
   background: #1d2520;
@@ -330,7 +330,7 @@ footer p {
 
 .cta-button:hover {
   background: #52463b44;
-}
+}*/
 
 /* Animations */
 .animate-fade {
