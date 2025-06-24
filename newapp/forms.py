@@ -1,5 +1,5 @@
 from django import forms
-from .models import Booking
+from .models import Booking, Order
 
 class BookingForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,11 @@ class BookingForm(forms.ModelForm):
         if len(phone_number) != 10 or not phone_number.isdigit():
             raise forms.ValidationError("Phone number must be numbers only and 10 digits long.")
         return phone_number
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['customer_name', 'customer_email', 'quantity', 'order_notes']
+        widgets = {
+            'order_notes': forms.Textarea(attr={'rows': 3}),
+        }
