@@ -81,3 +81,6 @@ def place_order(request, item_id):
     else:
         form = OrderForm()
     return render(request, 'order_page.html', {'form': form})
+
+def order_success(request):
+    return render(request, 'order_success.html')
