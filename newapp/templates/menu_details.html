@@ -26,6 +26,18 @@
         <p class="menu-price-large">Price: ${{ menu_item.price }}</p>
         <a href="{% url 'reservation' %}" class="cta-button">Reserve a Table</a>
       </div>
+
+      <h3>Place an Order</h3>
+      {% if order_success %}
+        <p class="success-msg">Your order was placed successfully!</p>
+      {% else %}
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class="cta-button" value="Place Order">
+        </form>
+      {% endif %}
+
     </div>
   </article>
 </section>
