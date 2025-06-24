@@ -42,3 +42,15 @@ class Menu(models.Model):
             f"{str(self.prep_time)} : "
             f"{str(self.calories)}"
         )
+
+class Order(models.Model):
+    menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=100)
+    customer_email = models.EmailField()
+    quantity = models.PositiveIntegerField(default=1)
+    order_notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    fulfilled = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.customer_name} - {self.menu.food_name}"
