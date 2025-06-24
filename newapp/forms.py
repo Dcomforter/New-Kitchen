@@ -21,5 +21,5 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ['customer_name', 'customer_email', 'quantity', 'order_notes']
         widgets = {
-            'order_notes': forms.Textarea(attr={'rows': 3}),
+            'order_notes': forms.Textarea(attrs={'rows': 3}),
         }
