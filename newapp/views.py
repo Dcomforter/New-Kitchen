@@ -84,3 +84,29 @@ def remove_from_cart(request, item_id):
     cart = Cart(request)
     cart.remove(item_id)
     return redirect('cart_view')
+
+def checkout(request):
+    cart = request.session.get('cart', {})
+    if not cart:
+        messages.info(request, "Your cart is empty.")
+        return redirect('menu')
+
+    items = []
+    total_price = 0
+    for item_id, item_data in cart.items():
+        try:
+            menu_item = Menu.objects.get(pk=item_id)
+            quantity = item_data['quantity']
+            items.append({
+                'menu_item': menu_item,
+                'quantity': quantity,
+                'subtotal': menu_item.price * quantity,
+            })
+            total_price += menu_item.price * quantity
+        except Menu.DoesNotExist:
+            continue
+
+    return render(request, 'checkout.html', {
+        'items': items,
+        'total_price': total_price,
+    })
