@@ -738,3 +738,15 @@ footer p {
     opacity: 1;
   }
 }
+
+.checkout-section {
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.cart-summary table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
