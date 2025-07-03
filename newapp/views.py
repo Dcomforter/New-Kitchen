@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from newapp.forms import BookingForm, OrderForm
-from newapp.models import Menu
+from newapp.models import Menu, Order
 from django.template import loader
 from .cart import Cart
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
