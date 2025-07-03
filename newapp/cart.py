@@ -23,3 +23,22 @@ class Cart:
     def save(self):
         self.session['cart'] = self.cart
         self.session.modified = True
+
+    def clear(self):
+        self.session['cart'] = {}
+        self.session.modified = True
+
+    def items(self):
+        from .models import Menu
+        items = []
+        for item_id, quantity in self.cart.items():
+            try:
+                menu_item = Menu.objects.get(pk=item_id)
+                items.append({
+                    'menu_item': menu_item,
+                    'quantity': quantity,
+                    'total_price': quantity * menu_item.price
+                })
+            except Menu.DoesNotExist:
+                continue
+        return items
