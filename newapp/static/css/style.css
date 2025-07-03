@@ -757,3 +757,7 @@ footer p {
   border-bottom: 1px solid #ddd;
   text-align: left;
 }
+
+.customer-info {
+  margin-top: 2rem;
+}
