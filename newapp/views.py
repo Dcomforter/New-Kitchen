@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from newapp.forms import BookingForm, OrderForm
 from newapp.models import Menu
 from django.template import loader
+from .cart import Cart
 
 # Create your views here.
 def home(request):
