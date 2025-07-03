@@ -761,3 +761,8 @@ footer p {
 .customer-info {
   margin-top: 2rem;
 }
+
+.customer-info label {
+  display: block;
+  margin: 0.5rem 0 0.2rem;
+}
