@@ -35,11 +35,20 @@
             <span class="close" id="closeOrderModal">&times;</span>
             <h2>Place Your Order</h2>
             <!--Old Single-item flow directed to modal when Order Now is clicked-->
-            <!--<form method="post" action="{% url 'place_order' menu_item.id %}">-->
-            <form method="post" action="{% url 'add_to_cart' menu_item.id %}">
+            <!--<form method="post" action="{% url 'place_order' menu_item.id %}">
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" class="cta-button">Submit Order</button>
+            </form>-->
+            <form method="post" action="{% url 'add_to_cart' menu_item.id %}">
+              {% csrf_token %}
+              <label for="quantity">Quantity:</label>
+              <input type="number" name="quantity" min="1" value="1" required>
+
+              <label for="order_notes">Order Notes:</label>
+              <textarea name="order_notes" rows="3"></textarea>
+
+              <button type="submit" class="cta-button">Add to Cart</button>
             </form>
           </div>
         </div>
