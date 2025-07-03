@@ -73,3 +73,13 @@ def order_success(request):
 def cart_view(request):
     cart = Cart(request)
     return render(request, 'cart.html', {'cart_items': cart.items()})
+
+def add_to_cart(request, item_id):
+    cart = Cart(request)
+    cart.add(item_id)
+    return redirect('cart_view')
+
+def remove_from_cart(request, item_id):
+    cart = Cart(request)
+    cart.remove(item_id)
+    return redirect('cart_view')
