@@ -738,3 +738,9 @@ footer p {
     opacity: 1;
   }
 }
+
+.checkout-section {
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
