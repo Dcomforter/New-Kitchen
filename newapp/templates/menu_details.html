@@ -36,6 +36,7 @@
             <h2>Place Your Order</h2>
             <!--Old Single-item flow directed to modal when Order Now is clicked-->
             <!--<form method="post" action="{% url 'place_order' menu_item.id %}">-->
+            <form method="post" action="{% url 'add_to_cart' menu_item.id %}">
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" class="cta-button">Submit Order</button>
