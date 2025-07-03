@@ -766,3 +766,12 @@ footer p {
   display: block;
   margin: 0.5rem 0 0.2rem;
 }
+
+.customer-info input,
+.customer-info textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
