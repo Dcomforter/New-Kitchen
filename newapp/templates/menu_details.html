@@ -34,7 +34,8 @@
           <div class="modal-content">
             <span class="close" id="closeOrderModal">&times;</span>
             <h2>Place Your Order</h2>
-            <form method="post" action="{% url 'place_order' menu_item.id %}">
+            <!--Old Single-item flow directed to modal when Order Now is clicked-->
+            <!--<form method="post" action="{% url 'place_order' menu_item.id %}">-->
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" class="cta-button">Submit Order</button>
