@@ -19,3 +19,7 @@ class Cart:
         if menu_item_id in self.cart:
             del self.cart[menu_item_id]
             self.save()    
+
+    def save(self):
+        self.session['cart'] = self.cart
+        self.session.modified = True
