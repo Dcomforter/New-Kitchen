@@ -750,3 +750,10 @@ footer p {
   border-collapse: collapse;
   margin-bottom: 1.5rem;
 }
+
+.cart-summary th,
+.cart-summary td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
