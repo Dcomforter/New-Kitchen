@@ -54,22 +54,6 @@ def menu_details(request, item_id):
         'order_success': order_success
     })
 
-
-# def menu_details(request, pk=None):
-#     if pk:
-#         menu_item = Menu.objects.get(pk=pk)
-#     else:
-#         menu_item = ''
-    
-#     return render(request, 'menu_details.html', {"menu_item" : menu_item})
-
-# def menu_details(request, id):
-#     menu = Menu.objects.get(id=id)
-#     template = loader.get_template('menu_details.html')
-#     context = {'menu_item' : menu}
-
-#     return HttpResponse(template.render(context, request))
-
 def place_order(request, item_id):
     menu_item = get_object_or_404(Menu, id=item_id)
     if request.method == "POST":
@@ -85,3 +69,7 @@ def place_order(request, item_id):
 
 def order_success(request):
     return render(request, 'order_success.html')
+
+def cart_view(request):
+    cart = Cart(request)
+    return render(request, 'cart.html', {'cart_items': cart.items()})
