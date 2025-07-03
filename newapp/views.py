@@ -110,3 +110,36 @@ def checkout(request):
         'items': items,
         'total_price': total_price,
     })
+
+def submit_order(request):
+    if request.method == 'POST':
+        cart = request.session.get('cart', {})
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        notes = request.POST.get('notes', '')
+
+        if not name or not email:
+            messages.error(request, "Name and Email are required.")
+            return redirect('checkout')
+
+        for item_id, item_data in cart.items():
+            try:
+                menu_item = Menu.objects.get(pk=item_id)
+                quantity = item_data['quantity']
+                Order.objects.create(
+                    menu_item=menu_item,
+                    customer_name=name,
+                    customer_email=email,
+                    quantity=quantity,
+                    order_notes=notes,
+                    fulfilled=False
+                )
+            except Menu.DoesNotExist:
+                continue
+
+        # Clear the cart
+        request.session['cart'] = {}
+        messages.success(request, "Your order has been placed successfully!")
+        return redirect('menu')
+
+    return redirect('checkout')
