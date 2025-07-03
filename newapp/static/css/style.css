@@ -380,7 +380,7 @@ footer p {
 }
 
 .swiper-slide {
-  background: rgb(0, 0, 0);
+  background: white;
   padding: 1rem;
   text-align: center;
   border-radius: 8px;
