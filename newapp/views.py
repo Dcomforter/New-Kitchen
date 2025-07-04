@@ -112,34 +112,32 @@ def checkout(request):
     })
 
 def submit_order(request):
+    cart = request.session.get('cart', {})
+    if not cart:
+        return redirect('view_cart')  # or show message: cart is empty
+
     if request.method == 'POST':
-        cart = request.session.get('cart', {})
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        notes = request.POST.get('notes', '')
+        customer_name = request.POST.get('customer_name')
+        customer_email = request.POST.get('customer_email')
+        order_notes = request.POST.get('order_notes', '')
 
-        if not name or not email:
-            messages.error(request, "Name and Email are required.")
-            return redirect('checkout')
+        for item_id, item in cart.items():
+            menu_item = get_object_or_404(Menu, id=item_id)
+            Order.objects.create(
+                menu_item=menu_item,
+                customer_name=customer_name,
+                customer_email=customer_email,
+                quantity=item['quantity'],
+                order_notes=order_notes,
+                fulfilled=False,  # or True, depending on your logic
+            )
 
-        for item_id, item_data in cart.items():
-            try:
-                menu_item = Menu.objects.get(pk=item_id)
-                quantity = item_data['quantity']
-                Order.objects.create(
-                    menu_item=menu_item,
-                    customer_name=name,
-                    customer_email=email,
-                    quantity=quantity,
-                    order_notes=notes,
-                    fulfilled=False
-                )
-            except Menu.DoesNotExist:
-                continue
-
-        # Clear the cart
+        # ✅ Clear cart after order
         request.session['cart'] = {}
-        messages.success(request, "Your order has been placed successfully!")
-        return redirect('menu')
+        request.session.modified = True
+
+        return render(request, 'order_success.html', {
+            'customer_name': customer_name
+        })
 
     return redirect('checkout')
