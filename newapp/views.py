@@ -137,7 +137,11 @@ def submit_order(request):
         # request.session.modified = True
         if 'cart' in request.session:
             del request.session['cart']
-            request.session.modified = True        
+            request.session.modified = True
+            print("✅ Cart cleared successfully")  # Check terminal log
+        else:
+            print("⚠️ Cart key not found in session")
+      
 
         return render(request, 'order_success.html', {
             'customer_name': customer_name

@@ -53,6 +53,8 @@ MIDDLEWARE = [
 
 ]
 
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
 ROOT_URLCONF = 'secondproject.urls'
 
 TEMPLATES = [
