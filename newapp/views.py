@@ -133,7 +133,6 @@ def submit_order(request):
             )
 
         # ✅ Clear cart after order
-        print("Clearing cart...")
         request.session['cart'] = {}
         request.session.modified = True
 
