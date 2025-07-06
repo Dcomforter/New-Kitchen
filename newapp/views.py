@@ -133,8 +133,11 @@ def submit_order(request):
             )
 
         # ✅ Clear cart after order
-        request.session['cart'] = {}
-        request.session.modified = True
+        # request.session['cart'] = {}
+        # request.session.modified = True
+        if 'cart' in request.session:
+            del request.session['cart']
+            request.session.modified = True        
 
         return render(request, 'order_success.html', {
             'customer_name': customer_name
