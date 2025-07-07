@@ -71,9 +71,23 @@ def place_order(request, item_id):
 def order_success(request):
     return render(request, 'order_success.html')
 
+# def view_cart(request):
+#     cart = Cart(request)
+#     return render(request, 'cart.html', {'cart_items': cart.items()})
+
 def view_cart(request):
-    cart = Cart(request)
-    return render(request, 'cart.html', {'cart_items': cart.items()})
+    cart = request.session.get('cart', {})
+
+    # ✅ Clean up old malformed cart data
+    for k, v in cart.items():
+        if isinstance(v, int):
+            cart[k] = {'quantity': v}
+    request.session['cart'] = cart
+    request.session.modified = True
+
+    cart_instance = Cart(request)
+    return render(request, 'cart.html', {'cart_items': cart_instance.items()})
+
 
 # def add_to_cart(request, item_id):
 #     cart = Cart(request)
@@ -82,31 +96,20 @@ def view_cart(request):
 
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', {})
-    item = get_object_or_404(Menu, pk=item_id)
+    item_id = str(item_id)
 
-    item_id_str = str(item_id)
-
-    if item_id_str in cart:
-        # If already present as an int (legacy format), upgrade it
-        if isinstance(cart[item_id_str], int):
-            cart[item_id_str] = {
-                'quantity': cart[item_id_str] + 1,
-                'name': item.food_name,
-                'price': float(item.price),
-            }
-        else:
-            cart[item_id_str]['quantity'] += 1
+    # Ensure cart item is in the right format
+    if item_id not in cart:
+        cart[item_id] = {'quantity': 1}
     else:
-        cart[item_id_str] = {
-            'quantity': 1,
-            'name': item.food_name,
-            'price': float(item.price),
-        }
+        if isinstance(cart[item_id], dict):
+            cart[item_id]['quantity'] += 1
+        else:
+            cart[item_id] = {'quantity': cart[item_id] + 1}
 
     request.session['cart'] = cart
     request.session.modified = True
     return redirect('view_cart')
-
 
 def remove_from_cart(request, item_id):
     cart = Cart(request)
