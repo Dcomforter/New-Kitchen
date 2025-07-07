@@ -11,16 +11,16 @@ class Cart:
     def add(self, menu_item_id, quantity=1):
         menu_item_id = str(menu_item_id)
         if menu_item_id in self.cart:
-            self.cart[menu_item_id] += quantity
+            self.cart[menu_item_id]['quantity'] += quantity
         else:
-            self.cart[menu_item_id] = quantity
+            self.cart[menu_item_id] = {'quantity': quantity}
         self.save()
 
     def remove(self, menu_item_id):
         menu_item_id = str(menu_item_id)
         if menu_item_id in self.cart:
             del self.cart[menu_item_id]
-            self.save()    
+            self.save()
 
     def save(self):
         self.session['cart'] = self.cart
@@ -36,11 +36,10 @@ class Cart:
             try:
                 menu_item = Menu.objects.get(id=int(item_id))
                 quantity = item_data.get('quantity', 1)
-                # quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
                 cart_items.append({
                     'menu_item': menu_item,
                     'quantity': quantity,
-                    'total_price': quantity * menu_item.price
+                    'subtotal': quantity * menu_item.price
                 })
             except Menu.DoesNotExist:
                 continue
