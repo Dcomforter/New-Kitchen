@@ -118,6 +118,7 @@ def remove_from_cart(request, item_id):
 
 def checkout(request):
     cart = request.session.get('cart', {})
+    print("🧺 CART CONTENT @checkout:", cart)
     if not cart:
         messages.info(request, "Your cart is empty.")
         return redirect('kitchen')
