@@ -147,4 +147,4 @@ def submit_order(request):
             'customer_name': customer_name
         })
 
-    return redirect('checkout')
+    return redirect('order_success')
