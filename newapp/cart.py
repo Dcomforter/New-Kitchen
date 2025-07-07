@@ -1,3 +1,5 @@
+from .models import Menu
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
@@ -29,7 +31,6 @@ class Cart:
         self.session.modified = True
 
     def items(self):
-        from .models import Menu
         cart_items = []
         for item_id, item_data in self.cart.items():
             try:
