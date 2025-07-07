@@ -142,11 +142,15 @@ def checkout(request):
         'total_price': total_price,
     })
 
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Menu, Order
+
 def submit_order(request):
     print("🛎️ submit_order view was called")  # Should always print
     cart = request.session.get('cart', {})
     if not cart:
-        return redirect('view_cart')  # or show message: cart is empty
+        print("⚠️ Cart is empty at submit_order.")
+        return redirect('view_cart')
 
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name')
@@ -154,29 +158,27 @@ def submit_order(request):
         order_notes = request.POST.get('order_notes', '')
 
         for item_id, item in cart.items():
-            menu_item = get_object_or_404(Menu, id=item_id)
+            menu_item = get_object_or_404(Menu, id=int(item_id))  # ✅ Cast item_id to int
             Order.objects.create(
                 menu_item=menu_item,
                 customer_name=customer_name,
                 customer_email=customer_email,
                 quantity=item['quantity'],
                 order_notes=order_notes,
-                fulfilled=False,  # or True, depending on your logic
+                fulfilled=False,
             )
 
         # ✅ Clear cart after order
-        # request.session['cart'] = {}
-        # request.session.modified = True
         if 'cart' in request.session:
             del request.session['cart']
             request.session.modified = True
-            print("✅ Cart cleared successfully")  # Check terminal log
+            print("✅ Cart cleared successfully")
         else:
             print("⚠️ Cart key not found in session")
-      
 
         return render(request, 'order_success.html', {
             'customer_name': customer_name
         })
 
     return redirect('checkout')
+
