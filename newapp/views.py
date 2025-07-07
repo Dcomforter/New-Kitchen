@@ -71,7 +71,7 @@ def place_order(request, item_id):
 def order_success(request):
     return render(request, 'order_success.html')
 
-def cart_view(request):
+def view_cart(request):
     cart = Cart(request)
     return render(request, 'cart.html', {'cart_items': cart.items()})
 
@@ -111,7 +111,7 @@ def add_to_cart(request, item_id):
 def remove_from_cart(request, item_id):
     cart = Cart(request)
     cart.remove(item_id)
-    return redirect('cart_view')
+    return redirect('view_cart')
 
 def checkout(request):
     cart = request.session.get('cart', {})
