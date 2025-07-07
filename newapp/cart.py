@@ -34,8 +34,9 @@ class Cart:
         cart_items = []
         for item_id, item_data in self.cart.items():
             try:
-                menu_item = Menu.objects.get(pk=item_id)
-                quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
+                menu_item = Menu.objects.get(id=int(item_id))
+                quantity = item_data.get('quantity', 1)
+                # quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
                 cart_items.append({
                     'menu_item': menu_item,
                     'quantity': quantity,
