@@ -75,10 +75,27 @@ def cart_view(request):
     cart = Cart(request)
     return render(request, 'cart.html', {'cart_items': cart.items()})
 
+# def add_to_cart(request, item_id):
+#     cart = Cart(request)
+#     cart.add(item_id)
+#     return redirect('cart_view')
+
 def add_to_cart(request, item_id):
-    cart = Cart(request)
-    cart.add(item_id)
-    return redirect('cart_view')
+    cart = request.session.get('cart', {})
+    item = get_object_or_404(Menu, pk=item_id)
+
+    if str(item_id) in cart:
+        cart[str(item_id)]['quantity'] += 1
+    else:
+        cart[str(item_id)] = {
+            'quantity': 1,
+            'name': item.food_name,
+            'price': float(item.price),
+        }
+
+    request.session['cart'] = cart
+    request.session.modified = True
+    return redirect('view_cart')
 
 def remove_from_cart(request, item_id):
     cart = Cart(request)
