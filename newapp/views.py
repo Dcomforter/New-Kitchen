@@ -88,12 +88,6 @@ def view_cart(request):
     cart_instance = Cart(request)
     return render(request, 'cart.html', {'cart_items': cart_instance.items()})
 
-
-# def add_to_cart(request, item_id):
-#     cart = Cart(request)
-#     cart.add(item_id)
-#     return redirect('cart_view')
-
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
