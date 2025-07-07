@@ -84,10 +84,20 @@ def add_to_cart(request, item_id):
     cart = request.session.get('cart', {})
     item = get_object_or_404(Menu, pk=item_id)
 
-    if str(item_id) in cart:
-        cart[str(item_id)]['quantity'] += 1
+    item_id_str = str(item_id)
+
+    if item_id_str in cart:
+        # If already present as an int (legacy format), upgrade it
+        if isinstance(cart[item_id_str], int):
+            cart[item_id_str] = {
+                'quantity': cart[item_id_str] + 1,
+                'name': item.food_name,
+                'price': float(item.price),
+            }
+        else:
+            cart[item_id_str]['quantity'] += 1
     else:
-        cart[str(item_id)] = {
+        cart[item_id_str] = {
             'quantity': 1,
             'name': item.food_name,
             'price': float(item.price),
@@ -96,6 +106,7 @@ def add_to_cart(request, item_id):
     request.session['cart'] = cart
     request.session.modified = True
     return redirect('view_cart')
+
 
 def remove_from_cart(request, item_id):
     cart = Cart(request)
