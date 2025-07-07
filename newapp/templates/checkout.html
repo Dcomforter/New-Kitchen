@@ -9,6 +9,7 @@
     {% if cart_items %}
       <form method="post" action="{% url 'submit_order' %}">
         {% csrf_token %}
+
         <div class="cart-summary">
           <table>
             <thead>
@@ -35,6 +36,7 @@
 
         <div class="customer-info">
           <h2>Customer Information</h2>
+
           <label for="customer_name">Full Name:</label>
           <input type="text" name="customer_name" id="customer_name" required>
 
@@ -45,7 +47,9 @@
           <textarea name="order_notes" id="order_notes" rows="4"></textarea>
         </div>
 
-        <button type="submit" class="cta-button">Submit Order</button>
+        <div class="form-actions">
+          <button type="submit" class="cta-button">Place Order</button>
+        </div>
       </form>
     {% else %}
       <p>Your cart is currently empty. <a href="{% url 'kitchen' %}">Go back to the menu</a>.</p>
