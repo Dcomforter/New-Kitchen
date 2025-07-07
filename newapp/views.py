@@ -117,31 +117,42 @@ def remove_from_cart(request, item_id):
     return redirect('view_cart')
 
 def checkout(request):
-    cart = request.session.get('cart', {})
+    cart = Cart(request)
     print("🧺 CART CONTENT @checkout:", cart)
-    if not cart:
-        messages.info(request, "Your cart is empty.")
-        return redirect('kitchen')
-
-    items = []
-    total_price = 0
-    for item_id, item_data in cart.items():
-        try:
-            menu_item = Menu.objects.get(pk=item_id)
-            quantity = item_data['quantity']
-            items.append({
-                'menu_item': menu_item,
-                'quantity': quantity,
-                'subtotal': menu_item.price * quantity,
-            })
-            total_price += menu_item.price * quantity
-        except Menu.DoesNotExist:
-            continue
-
+    cart_items = cart.items()
+    total = sum(item['subtotal'] for item in cart_items)
+    
     return render(request, 'checkout.html', {
-        'items': items,
-        'total_price': total_price,
+        'cart_items': cart_items,
+        'total': total
     })
+
+# def checkout(request):
+#     cart = request.session.get('cart', {})
+#     print("🧺 CART CONTENT @checkout:", cart)
+#     if not cart:
+#         messages.info(request, "Your cart is empty.")
+#         return redirect('kitchen')
+
+#     items = []
+#     total_price = 0
+#     for item_id, item_data in cart.items():
+#         try:
+#             menu_item = Menu.objects.get(pk=item_id)
+#             quantity = item_data['quantity']
+#             items.append({
+#                 'menu_item': menu_item,
+#                 'quantity': quantity,
+#                 'subtotal': menu_item.price * quantity,
+#             })
+#             total_price += menu_item.price * quantity
+#         except Menu.DoesNotExist:
+#             continue
+
+#     return render(request, 'checkout.html', {
+#         'items': items,
+#         'total_price': total_price,
+#     })
 
 def submit_order(request):
     print("🛎️ submit_order view was called")  # Should always print
