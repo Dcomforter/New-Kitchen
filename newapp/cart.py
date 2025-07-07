@@ -28,18 +28,18 @@ class Cart:
         self.session['cart'] = {}
         self.session.modified = True
 
-def items(self):
-    from .models import Menu
-    cart_items = []
-    for item_id, item_data in self.cart.items():
-        try:
-            menu_item = Menu.objects.get(pk=item_id)
-            quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
-            cart_items.append({
-                'menu_item': menu_item,
-                'quantity': quantity,
-                'total_price': quantity * menu_item.price
-            })
-        except Menu.DoesNotExist:
-            continue
-    return cart_items
+    def items(self):
+        from .models import Menu
+        cart_items = []
+        for item_id, item_data in self.cart.items():
+            try:
+                menu_item = Menu.objects.get(pk=item_id)
+                quantity = item_data['quantity'] if isinstance(item_data, dict) else item_data
+                cart_items.append({
+                    'menu_item': menu_item,
+                    'quantity': quantity,
+                    'total_price': quantity * menu_item.price
+                })
+            except Menu.DoesNotExist:
+                continue
+        return cart_items
