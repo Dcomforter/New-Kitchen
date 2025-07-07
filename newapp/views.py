@@ -112,6 +112,7 @@ def checkout(request):
     })
 
 def submit_order(request):
+    print("🛎️ submit_order view was called")  # Should always print
     cart = request.session.get('cart', {})
     if not cart:
         return redirect('view_cart')  # or show message: cart is empty
@@ -147,4 +148,4 @@ def submit_order(request):
             'customer_name': customer_name
         })
 
-    return redirect('order_success')
+    return redirect('checkout')
