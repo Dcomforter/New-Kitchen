@@ -11,7 +11,7 @@
     </li>
     {% endfor %}
   </ul>
-  <a href="{% url 'submit_order' %}" class="cta-button animate-bounce">Place Order</a>
+  <a href="{% url 'order_success' %}" class="cta-button animate-bounce">Place Order</a>
 {% else %}
   <p>Your cart is empty.</p>
 {% endif %}
