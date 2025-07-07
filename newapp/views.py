@@ -143,9 +143,6 @@ def checkout(request):
         'total_price': total_price,
     })
 
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Menu, Order
-
 def submit_order(request):
     print("🛎️ submit_order view was called")  # Should always print
     cart = request.session.get('cart', {})
