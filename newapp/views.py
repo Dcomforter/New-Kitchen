@@ -71,10 +71,6 @@ def place_order(request, item_id):
 def order_success(request):
     return render(request, 'order_success.html')
 
-# def view_cart(request):
-#     cart = Cart(request)
-#     return render(request, 'cart.html', {'cart_items': cart.items()})
-
 def view_cart(request):
     cart = request.session.get('cart', {})
 
