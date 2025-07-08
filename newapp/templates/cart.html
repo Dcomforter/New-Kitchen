@@ -16,8 +16,9 @@
   <form method="post" action="{% url 'submit_order' %}">
     {% csrf_token %}
     <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
+    <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Add Items</a>
   </form>
 {% else %}
-  <p>Your cart is currently empty. <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Back to the menu</a>.</p>
+  <p>Your cart is currently empty. <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Back to the menu</a></p>
 {% endif %}
 {% endblock %}
