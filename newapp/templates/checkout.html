@@ -44,7 +44,14 @@
           <input type="email" name="customer_email" id="customer_email" required>
 
           <label for="order_notes">Order Notes (optional):</label>
-          <textarea name="order_notes" id="order_notes" rows="4"></textarea>
+          {% for item in cart_items %}
+            <div>
+              <strong>{{ item.menu_item.food_name }}</strong> — Quantity: {{ item.quantity }}<br>
+              Notes: <textarea name="notes_{{ item.menu_item.id }}">{{ item.order_notes }}</textarea>
+            </div>
+          {% endfor %}
+
+          <!--<textarea name="order_notes" id="order_notes" rows="4"></textarea>-->
         </div>
 
         <div class="form-actions">
