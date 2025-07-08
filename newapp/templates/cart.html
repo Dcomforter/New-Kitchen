@@ -18,6 +18,6 @@
     <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
   </form>
 {% else %}
-  <p>Your cart is empty.</p>
+  <p>Your cart is currently empty. <a href="{% url 'kitchen' %}">Go back to the menu</a>.</p>
 {% endif %}
 {% endblock %}
