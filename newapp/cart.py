@@ -36,9 +36,11 @@ class Cart:
             try:
                 menu_item = Menu.objects.get(id=int(item_id))
                 quantity = item_data.get('quantity', 1)
+                notes = item_data.get('order_notes', '')
                 cart_items.append({
                     'menu_item': menu_item,
                     'quantity': quantity,
+                    'notes': notes,
                     'subtotal': quantity * menu_item.price
                 })
             except Menu.DoesNotExist:
