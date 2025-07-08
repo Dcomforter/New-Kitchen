@@ -145,6 +145,9 @@ def submit_order(request):
 
         for item_id, item in cart.items():
             menu_item = get_object_or_404(Menu, id=int(item_id))  # ✅ Cast item_id to int
+            dynamic_note_key = f"notes_{item_id}"
+            order_notes = request.POST.get(dynamic_note_key, item.get('order_notes', ''))
+            
             Order.objects.create(
                 menu_item=menu_item,
                 customer_name=customer_name,
