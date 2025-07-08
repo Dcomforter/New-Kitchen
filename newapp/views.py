@@ -88,14 +88,23 @@ def add_to_cart(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
 
-    # Ensure cart item is in the right format
-    if item_id not in cart:
-        cart[item_id] = {'quantity': 1}
-    else:
+    # Get quantity from POST, fallback to 1
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+    except (TypeError, ValueError):
+        quantity = 1
+
+    # Ensure quantity is at least 1
+    quantity = max(quantity, 1)
+
+    # If item exists, add to its quantity
+    if item_id in cart:
         if isinstance(cart[item_id], dict):
-            cart[item_id]['quantity'] += 1
+            cart[item_id]['quantity'] += quantity
         else:
-            cart[item_id] = {'quantity': cart[item_id] + 1}
+            cart[item_id] = {'quantity': cart[item_id] + quantity}
+    else:
+        cart[item_id] = {'quantity': quantity}
 
     request.session['cart'] = cart
     request.session.modified = True
