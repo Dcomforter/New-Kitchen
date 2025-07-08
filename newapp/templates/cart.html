@@ -15,7 +15,6 @@
   <!-- ✅ Proper form to submit the order -->
   <form method="post" action="{% url 'submit_order' %}">
     {% csrf_token %}
-    <!--<button type="submit" class="cta-button animate-bounce">Place Order</button>-->
     <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
   </form>
 {% else %}
