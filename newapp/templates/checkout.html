@@ -34,6 +34,13 @@
           <p><strong>Total:</strong> ${{ total }}</p>
         </div>
 
+        {% for item in cart_items %}
+          <div>
+            <strong>{{ item.menu_item.food_name }}</strong> — Quantity: {{ item.quantity }}<br>
+            Notes: <textarea name="notes_{{ item.menu_item.id }}">{{ item.order_notes }}</textarea>
+          </div>
+        {% endfor %}
+
         <div class="customer-info">
           <h2>Customer Information</h2>
 
