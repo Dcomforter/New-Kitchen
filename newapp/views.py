@@ -97,14 +97,19 @@ def add_to_cart(request, item_id):
     # Ensure quantity is at least 1
     quantity = max(quantity, 1)
 
+    order_notes = request.POST.get('order_notes', '').strip()
+
     # If item exists, add to its quantity
     if item_id in cart:
         if isinstance(cart[item_id], dict):
             cart[item_id]['quantity'] += quantity
+
+            if order_notes:
+                cart[item_id]['order_notes'] = order_notes
         else:
-            cart[item_id] = {'quantity': cart[item_id] + quantity}
+            cart[item_id] = {'quantity': cart[item_id] + quantity, 'order_notes': order_notes}
     else:
-        cart[item_id] = {'quantity': quantity}
+        cart[item_id] = {'quantity': quantity, 'order_notes': order_notes}
 
     request.session['cart'] = cart
     request.session.modified = True
