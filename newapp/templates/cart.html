@@ -6,7 +6,7 @@
     {% for item in cart_items %}
     <li>
       {{ item.menu_item.food_name }} - Quantity: {{ item.quantity }} - 
-      Total: ${{ item.total_price }}
+      Total: ${{ item.total }}
       <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a>
     </li>
     {% endfor %}
