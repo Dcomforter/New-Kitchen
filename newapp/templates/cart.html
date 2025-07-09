@@ -19,7 +19,7 @@
   </ul>
 
   <h3>Grand Total: $<span id="grand-total">
-    {{ cart_items|sum(attribute='subtotal') }}
+    {{ grand_total }}
   </span></h3>
 
   <form method="post" action="{% url 'submit_order' %}">
