@@ -4,6 +4,7 @@ from newapp.forms import BookingForm, OrderForm
 from newapp.models import Menu, Order
 from django.template import loader
 from .cart import Cart
+from django.http import JsonResponse
 from django.contrib import messages
 
 # Create your views here.
@@ -120,21 +121,7 @@ def remove_from_cart(request, item_id):
     cart.remove(item_id)
     return redirect('view_cart')
 
-def increase_quantity(request, item_id):
-    cart = Cart(request)
-    cart.add(item_id, quantity=1)
-    return redirect('view_cart')
 
-def decrease_quantity(request, item_id):
-    cart = Cart(request)
-    item_id = str(item_id)
-    if item_id in cart.cart:
-        if cart.cart[item_id]['quantity'] > 1:
-            cart.cart[item_id]['quantity'] -= 1
-        else:
-            del cart.cart[item_id]
-        cart.save()
-    return redirect('view_cart')
 
 def checkout(request):
     cart = Cart(request)
