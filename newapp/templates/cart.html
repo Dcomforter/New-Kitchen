@@ -6,7 +6,7 @@
   <ul id="cart-list">
     {% for item in cart_items %}
       <li data-item-id="{{ item.menu_item.id }}">
-        {{ item.menu_item.food_name }} - 
+        <strong>{{ item.menu_item.food_name }}</strong><br> 
         Quantity: 
         <button class="decrease-qty" data-id="{{ item.menu_item.id }}">−</button>
         <span class="item-qty">{{ item.quantity }}</span>
