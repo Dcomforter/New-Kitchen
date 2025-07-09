@@ -54,3 +54,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.customer_name} - {self.menu_item.food_name}"
+    
+    @property
+    def subtotal(self):
+        return self.menu_item.price * self.quantity    
