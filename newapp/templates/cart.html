@@ -13,7 +13,7 @@
         <button class="increase-qty" data-id="{{ item.menu_item.id }}">+</button><br>
         Notes: {{ item.notes|default:"None" }}<br>
         Total: $<span class="item-total">{{ item.subtotal }}</span>
-        <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a>
+        <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a><br><br>
       </li>
     {% endfor %}
   </ul>
