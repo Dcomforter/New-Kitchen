@@ -85,7 +85,15 @@ def view_cart(request):
     request.session.modified = True
 
     cart_instance = Cart(request)
-    return render(request, 'cart.html', {'cart_items': cart_instance.items()})
+    cart_items = cart_instance.items()
+
+    # ✅ Calculate the grand total from all cart items
+    grand_total = sum(item['subtotal'] for item in cart_items)
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'grand_total': grand_total,
+    })
 
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', {})
