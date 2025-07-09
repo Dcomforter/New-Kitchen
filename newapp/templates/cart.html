@@ -2,17 +2,18 @@
 {% block content %}
 <h1>Your Order Cart</h1>
 {% if cart_items %}
-  <ul>
+  <ul id="cart-items">
     {% for item in cart_items %}
-    <li>
+    <li id="cart-item-{{ item.menu_item.id }}">
       <strong>{{ item.menu_item.food_name }}</strong><br>
+
       Quantity:
-      <a href="{% url 'decrease_quantity' item.menu_item.id %}" style="margin:0 5px;">➖</a>
-      {{ item.quantity }}
-      <a href="{% url 'increase_quantity' item.menu_item.id %}" style="margin:0 5px;">➕</a>
+      <button class="qty-btn" data-id="{{ item.menu_item.id }}" data-action="decrease">➖</button>
+      <span id="qty-{{ item.menu_item.id }}">{{ item.quantity }}</span>
+      <button class="qty-btn" data-id="{{ item.menu_item.id }}" data-action="increase">➕</button>
+
       <br>
-      Total: ${{ item.subtotal }}
-      <br>
+      Total: $<span id="subtotal-{{ item.menu_item.id }}">{{ item.subtotal }}</span><br>
       <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a>
     </li>
     {% endfor %}
@@ -26,4 +27,37 @@
 {% else %}
   <p>Your cart is currently empty. <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Back to the menu</a></p>
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('.qty-btn');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const itemId = button.dataset.id;
+      const action = button.dataset.action;
+
+      fetch(`/cart/${action}/${itemId}/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById(`qty-${itemId}`).textContent = data.quantity;
+          document.getElementById(`subtotal-${itemId}`).textContent = data.subtotal;
+          if (data.quantity === 0) {
+            document.getElementById(`cart-item-${itemId}`).remove();
+          }
+        }
+      });
+    });
+  });
+});
+</script>
 {% endblock %}
