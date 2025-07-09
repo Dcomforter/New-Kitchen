@@ -18,6 +18,10 @@
     {% endfor %}
   </ul>
 
+  <h3>Grand Total: $<span id="grand-total">
+    {{ cart_items|sum(attribute='subtotal') }}
+  </span></h3>
+
   <form method="post" action="{% url 'submit_order' %}">
     {% csrf_token %}
     <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
@@ -56,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const itemEl = document.querySelector(`li[data-item-id="${itemId}"]`);
         itemEl.querySelector('.item-qty').textContent = data.quantity;
         itemEl.querySelector('.item-total').textContent = data.subtotal;
+        updateGrandTotal();
       })
       .catch(error => {
         console.error('Error:', error);
@@ -63,6 +68,14 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+
+  function updateGrandTotal() {
+    let total = 0;
+    document.querySelectorAll('.item-total').forEach(el => {
+      total += parseFloat(el.textContent);
+    });
+    document.getElementById('grand-total').textContent = total.toFixed(2);
+  }
 
   // CSRF helper
   function getCookie(name) {
