@@ -10,6 +10,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['customer_name', 'menu_item', 'quantity', 'fulfilled', 'created_at']
     list_filter = ['fulfilled', 'created_at']
     search_fields = ['customer_name', 'customer_email']
+    readonly_fields = ('subtotal',)
 
 
 # Register your models here.
