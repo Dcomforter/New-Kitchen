@@ -3,81 +3,88 @@
 <h1>Your Order Cart</h1>
 
 {% if cart_items %}
-  <ul id="cart-list">
+  <ul>
     {% for item in cart_items %}
-      <li data-item-id="{{ item.menu_item.id }}">
-        {{ item.menu_item.food_name }} - 
-        Quantity: 
-        <button class="decrease-qty" data-id="{{ item.menu_item.id }}">−</button>
-        <span class="item-qty">{{ item.quantity }}</span>
-        <button class="increase-qty" data-id="{{ item.menu_item.id }}">+</button>
-        — Total: $<span class="item-total">{{ item.subtotal }}</span>
-        <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a>
-      </li>
+    <li id="item-{{ item.menu_item.id }}">
+      <strong>{{ item.menu_item.food_name }}</strong><br>
+      Quantity:
+      <button class="qty-btn" data-id="{{ item.menu_item.id }}" data-action="decrease">➖</button>
+      <span id="qty-{{ item.menu_item.id }}">{{ item.quantity }}</span>
+      <button class="qty-btn" data-id="{{ item.menu_item.id }}" data-action="increase">➕</button><br>
+      Notes: {{ item.notes|default:"None" }}<br>
+      <span>Subtotal: $<span id="subtotal-{{ item.menu_item.id }}">{{ item.subtotal }}</span></span><br>
+      <a href="{% url 'remove_from_cart' item.menu_item.id %}" class="text-red-600 underline">Remove</a>
+      <hr>
+    </li>
     {% endfor %}
   </ul>
 
   <form method="post" action="{% url 'submit_order' %}">
     {% csrf_token %}
     <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
-    <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Add More Items</a>
+    <a href="{% url 'kitchen' %}" class="cta-button">Add More Items</a>
   </form>
+
 {% else %}
-  <p>Your cart is empty. <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Browse Menu</a></p>
+  <p>Your cart is currently empty. <a href="{% url 'kitchen' %}" class="cta-button">Back to Menu</a></p>
 {% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const csrftoken = getCookie('csrftoken');
-
-  document.querySelectorAll('.increase-qty, .decrease-qty').forEach(button => {
-    button.addEventListener('click', function () {
-      const itemId = this.dataset.id;
-      const action = this.classList.contains('increase-qty') ? 'increase' : 'decrease';
-
-      fetch(`/cart/update_quantity/${itemId}/`, {
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': csrftoken,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ action })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network error');
-        }
-        return response.json();
-      })
-      .then(data => {
-        const itemEl = document.querySelector(`li[data-item-id="${itemId}"]`);
-        itemEl.querySelector('.item-qty').textContent = data.quantity;
-        itemEl.querySelector('.item-total').textContent = data.subtotal;
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Something went wrong. Please try again.');
-      });
-    });
-  });
-
-  // CSRF helper
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let cookie of cookies) {
-        cookie = cookie.trim();
-        if (cookie.startsWith(name + '=')) {
-          cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
-          break;
-        }
+// CSRF setup
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
     }
-    return cookieValue;
   }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+// Handle quantity button clicks
+document.querySelectorAll('.qty-btn').forEach(button => {
+  button.addEventListener('click', function() {
+    const itemId = this.getAttribute('data-id');
+    const action = this.getAttribute('data-action');
+
+    fetch(`/cart/${action}/${itemId}/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrftoken,
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const qtySpan = document.getElementById(`qty-${itemId}`);
+        const subtotalSpan = document.getElementById(`subtotal-${itemId}`);
+        if (data.quantity > 0) {
+          qtySpan.textContent = data.quantity;
+          subtotalSpan.textContent = data.subtotal.toFixed(2);
+        } else {
+          // If quantity is 0, remove item from UI
+          document.getElementById(`item-${itemId}`).remove();
+        }
+      } else {
+        alert("Update failed: " + data.message);
+      }
+    })
+    .catch(error => {
+      console.error("Error updating quantity:", error);
+      alert("Something went wrong.");
+    });
+  });
 });
 </script>
 {% endblock %}
