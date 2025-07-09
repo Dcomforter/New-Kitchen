@@ -121,7 +121,34 @@ def remove_from_cart(request, item_id):
     cart.remove(item_id)
     return redirect('view_cart')
 
+def update_quantity_ajax(request, item_id, action):
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        cart = Cart(request)
+        item_id = str(item_id)
 
+        if item_id not in cart.cart:
+            return JsonResponse({'success': False, 'message': 'Item not in cart'})
+
+        if action == 'increase':
+            cart.cart[item_id]['quantity'] += 1
+        elif action == 'decrease':
+            cart.cart[item_id]['quantity'] -= 1
+            if cart.cart[item_id]['quantity'] <= 0:
+                del cart.cart[item_id]
+
+        cart.save()
+
+        # Return updated quantity and subtotal
+        quantity = cart.cart.get(item_id, {}).get('quantity', 0)
+        try:
+            menu_item = Menu.objects.get(id=int(item_id))
+            subtotal = quantity * menu_item.price
+        except Menu.DoesNotExist:
+            subtotal = 0
+
+        return JsonResponse({'success': True, 'quantity': quantity, 'subtotal': subtotal})
+    
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 def checkout(request):
     cart = Cart(request)
