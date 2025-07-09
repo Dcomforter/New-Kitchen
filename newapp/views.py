@@ -120,6 +120,18 @@ def remove_from_cart(request, item_id):
     cart.remove(item_id)
     return redirect('view_cart')
 
+def increase_quantity(request, item_id):
+    cart = Cart(request)
+    cart.add(item_id, quantity=1)
+    return redirect('view_cart')
+
+def decrease_quantity(request, item_id):
+    cart = Cart(request)
+    item_id = str(item_id)
+    if item_id in cart.cart:
+        if cart.cart[item_id]['quantity'] > 1:
+            cart.cart[item_id]['quantity'] -= 1
+
 def checkout(request):
     cart = Cart(request)
     print("🧺 CART CONTENT @checkout:", cart)
@@ -147,7 +159,7 @@ def submit_order(request):
             menu_item = get_object_or_404(Menu, id=int(item_id))  # ✅ Cast item_id to int
             dynamic_note_key = f"notes_{item_id}"
             order_notes = request.POST.get(dynamic_note_key, item.get('order_notes', ''))
-            
+
             Order.objects.create(
                 menu_item=menu_item,
                 customer_name=customer_name,
