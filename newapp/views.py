@@ -131,6 +131,10 @@ def decrease_quantity(request, item_id):
     if item_id in cart.cart:
         if cart.cart[item_id]['quantity'] > 1:
             cart.cart[item_id]['quantity'] -= 1
+        else:
+            del cart.cart[item_id]
+        cart.save()
+    return redirect('view_cart')
 
 def checkout(request):
     cart = Cart(request)
