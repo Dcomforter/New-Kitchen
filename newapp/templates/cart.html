@@ -5,14 +5,19 @@
   <ul>
     {% for item in cart_items %}
     <li>
-      {{ item.menu_item.food_name }} - Quantity: {{ item.quantity }} - 
+      <strong>{{ item.menu_item.food_name }}</strong><br>
+      Quantity:
+      <a href="{% url 'decrease_quantity' item.menu_item.id %}" style="margin:0 5px;">➖</a>
+      {{ item.quantity }}
+      <a href="{% url 'increase_quantity' item.menu_item.id %}" style="margin:0 5px;">➕</a>
+      <br>
       Total: ${{ item.subtotal }}
+      <br>
       <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a>
     </li>
     {% endfor %}
   </ul>
 
-  <!-- ✅ Proper form to submit the order -->
   <form method="post" action="{% url 'submit_order' %}">
     {% csrf_token %}
     <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
