@@ -95,41 +95,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<div id="toast" class="toast-message hidden">Quantity updated</div>
-
-<style>
-.toast-message {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #28a745;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 9999;
-  transition: opacity 0.5s ease-in-out;
-}
-.toast-message.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.toast-message.show {
-  opacity: 1;
-}
-</style>
-
-<script>
-  function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.remove('hidden');
-    toast.classList.add('show');
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-        toast.classList.add('hidden');
-    }, 2000);
-}
-</script>
 {% endblock %}
