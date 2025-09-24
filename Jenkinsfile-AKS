@@ -1,0 +1,57 @@
+pipeline {
+  agent any
+
+  environment {
+    ACR_NAME = 'kitchen'
+    IMAGE_NAME = 'my-kitchen'
+    RESOURCE_GROUP = 'aks-prod-rg'
+    AKS_CLUSTER = 'aks-prod'
+    AZURE_TENANT = '29d626c9-b1cc-4ef2-b927-27f7dcdbf259'
+  }
+
+  stages {
+    stage('Clone Repository') {
+      steps {
+        echo 'Cloning the Repository'
+        git 'https://github.com/Dcomforter/New-Kitchen.git'
+      }
+    }
+
+    stage('Build Docker Image') {
+      steps {
+        echo 'Building the Docker image'
+        sh 'docker build -t $IMAGE_NAME .'
+      }
+    }
+
+    stage('Tag and Push to ACR') {
+      steps {
+        echo 'Logging into Azure and pushing image'
+        withCredentials([usernamePassword(credentialsId: 'ACRLogin', passwordVariable: 'AZURE_PASSWORD', usernameVariable: 'AZURE_APP_ID')]) {
+          sh '''
+            az login --service-principal \
+              -u $AZURE_APP_ID \
+              -p $AZURE_PASSWORD \
+              --tenant $AZURE_TENANT
+    
+            az acr login --name $ACR_NAME
+            docker tag $IMAGE_NAME $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+            docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+          '''
+        }
+      }
+    }
+
+    stage('Deploy to AKS') {
+      steps {
+        echo 'Deploying to AKS'
+        sh '''
+          az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER --overwrite-existing
+          kubelogin convert-kubeconfig -l azurecli
+          kubectl set image deployment/kitchapp kitch-cont=$ACR_NAME.azurecr.io/$IMAGE_NAME:latest -n kitchen
+        '''
+      }
+    }
+  }
+}
+
