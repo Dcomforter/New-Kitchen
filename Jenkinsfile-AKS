@@ -23,35 +23,54 @@ pipeline {
         sh 'docker build -t $IMAGE_NAME .'
       }
     }
-
+    
     stage('Tag and Push to ACR') {
       steps {
         echo 'Logging into Azure and pushing image'
-        withCredentials([usernamePassword(credentialsId: 'ACRLogin', passwordVariable: 'AZURE_PASSWORD', usernameVariable: 'AZURE_APP_ID')]) {
-          sh '''
-            az login --service-principal \
-              -u $AZURE_APP_ID \
-              -p $AZURE_PASSWORD \
-              --tenant $AZURE_TENANT
+        script {
+          def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+          def imageTag = "${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${commitHash}"
+        
+          withCredentials([usernamePassword(credentialsId: 'ACRLogin', passwordVariable: 'AZURE_PASSWORD', usernameVariable: 'AZURE_APP_ID')]) {
+            sh """#!/bin/bash
+              az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
+              az acr login --name $ACR_NAME
+              docker tag $IMAGE_NAME ${imageTag}
+              docker push ${imageTag}
+            """
+          }
     
-            az acr login --name $ACR_NAME
-            docker tag $IMAGE_NAME $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
-            docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
-          '''
+          // Save the tag for use in the next stage
+          env.IMAGE_TAG = commitHash
         }
       }
     }
 
+
     stage('Deploy to AKS') {
       steps {
         echo 'Deploying to AKS'
-        sh '''
-          az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER --overwrite-existing
-          kubelogin convert-kubeconfig -l azurecli
-          kubectl set image deployment/kitchapp kitch-cont=$ACR_NAME.azurecr.io/$IMAGE_NAME:latest -n kitchen
-        '''
+        sh """#!/bin/bash
+        az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER --overwrite-existing
+        kubelogin convert-kubeconfig -l azurecli
+        kubectl set image deployment/kitchapp kitch-cont=${ACR_NAME}.azurecr.io/$IMAGE_NAME:$IMAGE_TAG -n kitchen
+        """
+
       }
+    }
+    
+    stage('Remove Old Images') {
+      steps {
+        echo 'Pruning System to Remove Old Docker image'
+        sh 'docker system prune -af'
+      }
+    }
+    
+    stage('Rollout Status Check'){
+        steps {
+            echo 'Checking Rollout Status'
+            sh 'kubectl rollout status deployment/kitchapp -n kitchen'
+        }
     }
   }
 }
-
