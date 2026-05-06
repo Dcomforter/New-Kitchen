@@ -5,57 +5,30 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Dcomforters' Kitchen</title>
-    <meta name="description" content="A brief description" />
-    <meta
-      name="author"
-      content="Based in Destin, Florida, Dcomforters' Kitchen is a family owned Nigerian restaurant, focused 
-      on Intercontinental dishes served with a modern twist"
-    />
+    <meta name="description" content="Family-owned Nigerian restaurant in Destin, Florida — intercontinental dishes with a modern twist." />
+    <meta name="author" content="Dcomforters' Kitchen" />
 
-    <!-- Load favicon -->
-    <link
-      rel="shortcut icon"
-      type="image/png"
-      href="{% static 'img/favic.png' %}"
-    />
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favic.png' %}" />
 
-    <!-- Include your CSS files here -->
-    <link
-      rel="preload"
-      as="style"
-      href="{% static 'css/style.css' %}"
-      onload="this.rel = 'stylesheet'"
-    />
-
-    <!-- Include Swiper's CSS, a Javascript library-->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Karla&family=Markazi+Text:wght@500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
 
-  <!-- Scroll Effects -->
-  <script src="{% static 'js/scroll-effects.js' %}"></script>
-  <!-- Include Swiper's JS -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
-  <script src="{% static 'js/menu-carousel.js' %}" defer></script>
-
-  <script src="{% static 'js/nav-toggle.js' %}" defer></script>
-
   <body>
-    <!--Header content-->
     {% include 'partials/_header.html' %}
 
-    <main>{% block content %} {% endblock %}</main>
+    <main>{% block content %}{% endblock %}</main>
 
-    <!--Footer content-->
     {% include 'partials/_footer.html' %}
+
+    <!-- Scroll animation trigger -->
+    <script src="{% static 'js/scroll-effects.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
   </body>
