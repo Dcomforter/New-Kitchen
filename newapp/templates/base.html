@@ -27,8 +27,9 @@
 
     {% include 'partials/_footer.html' %}
 
-    <!-- Scroll animation trigger -->
+    <!-- Scripts at bottom so DOM is ready -->
     <script src="{% static 'js/scroll-effects.js' %}"></script>
+    <script src="{% static 'js/nav-toggle.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
   </body>
