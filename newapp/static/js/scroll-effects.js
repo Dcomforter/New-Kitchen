@@ -1,5 +1,7 @@
-document.addEventListener('DOMContentLoaded', function () {
+function initScrollAnimations() {
   const targets = document.querySelectorAll('.scroll-animate');
+
+  if (!targets.length) return;
 
   const observer = new IntersectionObserver(
     function (entries) {
@@ -10,10 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     },
-    { threshold: 0.12 }
+    { threshold: 0.08 }
   );
 
   targets.forEach(function (el) {
     observer.observe(el);
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollAnimations);
+} else {
+  initScrollAnimations();
+}
