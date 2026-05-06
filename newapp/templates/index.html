@@ -2,45 +2,120 @@
 {% load static %}
 
 {% block content %}
+
+  <!-- Promo Banner -->
+  <div class="promo-banner">
+    Spring Special — <strong>30% off</strong> all weekend reservations. Limited seats available.
+  </div>
+
+  <!-- Hero -->
   <section id="hero">
-    <div class="overlay-content animate-fade">
-      <h1 class="heading-shadow">Special Spring Offer</h1>
-      <p>Swoop in on our <strong>25% off</strong> reservations this Fall weekends.</p>
-      <a href="{% url 'reservation' %}" class="cta-button animate-bounce scroll-animate">Reserve Now</a>
+    <div class="hero-content animate-fade">
+      <span class="hero-tag">Nigerian · Intercontinental · Destin, FL</span>
+      <h1>Where Tradition<br>Meets <em>Modern Flavour</em></h1>
+      <p>A family-owned kitchen crafting authentic Nigerian and intercontinental dishes in the heart of Florida.</p>
+      <div class="hero-actions">
+        <a href="{% url 'kitchen' %}" class="btn-primary">Explore Our Menu</a>
+        <a href="{% url 'reservation' %}" class="btn-ghost">Reserve a Table</a>
+      </div>
     </div>
   </section>
 
-  <section class="swiper-container menu-carousel scroll-animate">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <img src="{% static 'img/jollof_rice.jpg' %}" alt="Jollof Rice">
-        <h2>Our Newest Menu</h2>
-        <p>Seasonal dishes based on Nigerian, African, and Intercontinental cuisine.</p>
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'img/beans_plantain.jpg' %}" alt="Beans and Plantain">
-        <h2>Reserve a Table</h2>
-        <p>Experience an Intercontinental dining journey you’ll love.</p>
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'img/white_rice.jpg' %}" alt="White Rice">
-        <h2>Opening Hours</h2>
-        <p>Dcomforters' Kitchen welcomes you 6 days a week.</p>
-      </div>
+  <!-- Value Pillars -->
+  <div class="pillars scroll-animate">
+    <div class="pillar">
+      <div class="pillar-icon">🍲</div>
+      <h3>Authentic Flavours</h3>
+      <p>Traditional Nigerian & African recipes</p>
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-  </section>
+    <div class="pillar">
+      <div class="pillar-icon">🌿</div>
+      <h3>Fresh Ingredients</h3>
+      <p>Seasonal, quality produce every day</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🕯️</div>
+      <h3>Warm Atmosphere</h3>
+      <p>Rustic, relaxed and welcoming</p>
+    </div>
+  </div>
 
-  <section class="scroll-animate hero-container">
-    <div class="hero-text">
-      <h2>Discover True Nigerian Flavor</h2>
-      <p>Our chefs blend traditional flavors with modern creativity to bring you a unique culinary experience in Florida.</p>
-      <a href="{% url 'kitchen' %}" class="cta-button">Explore Our Menu</a>
+  <!-- Menu Preview -->
+  <div class="section-header scroll-animate">
+    <span class="eyebrow">From Our Kitchen</span>
+    <h2>Seasonal Favourites</h2>
+  </div>
+
+  <div class="menu-preview scroll-animate">
+    <a href="{% url 'kitchen' %}" class="menu-preview-card">
+      <span class="cuisine">Western African</span>
+      <h3>Jollof Rice</h3>
+      <div class="card-bottom"><span class="price">$50</span><span class="arrow">→</span></div>
+    </a>
+    <a href="{% url 'kitchen' %}" class="menu-preview-card">
+      <span class="cuisine">Nigerian</span>
+      <h3>Ewa Aganyin</h3>
+      <div class="card-bottom"><span class="price">$40</span><span class="arrow">→</span></div>
+    </a>
+    <a href="{% url 'kitchen' %}" class="menu-preview-card">
+      <span class="cuisine">Nigerian</span>
+      <h3>Iyan and Egusi</h3>
+      <div class="card-bottom"><span class="price">$45</span><span class="arrow">→</span></div>
+    </a>
+    <a href="{% url 'kitchen' %}" class="menu-preview-card">
+      <span class="cuisine">Intercontinental</span>
+      <h3>Fried Rice</h3>
+      <div class="card-bottom"><span class="price">$30</span><span class="arrow">→</span></div>
+    </a>
+    <a href="{% url 'kitchen' %}" class="menu-preview-card">
+      <span class="cuisine">Nigerian</span>
+      <h3>Plantain and Efo</h3>
+      <div class="card-bottom"><span class="price">$25</span><span class="arrow">→</span></div>
+    </a>
+    <a href="{% url 'kitchen' %}" class="menu-preview-card">
+      <span class="cuisine">Nigerian</span>
+      <h3>Yam and Egg</h3>
+      <div class="card-bottom"><span class="price">$25</span><span class="arrow">→</span></div>
+    </a>
+  </div>
+
+  <!-- Story / About Split -->
+  <div class="story-section scroll-animate">
+    <div class="story-image">
+      <img src="{% static 'img/Israel-and-Precious.jpg' %}" alt="Israel and Precious, owners of Dcomforters' Kitchen">
     </div>
-    <div class="hero-image">
-      <img src="{% static 'img/menu-items.jpg' %}" alt="Restaurant Interior">
+    <div class="story-text">
+      <span class="eyebrow">Our Story</span>
+      <h2>A Dream Built on Love &amp; Flavour</h2>
+      <p>Israel and Precious moved from Nigeria to Destin, Florida to bring their shared passion for exceptional food to the world. Every dish tells a story of heritage, family, and the joy of feeding people well.</p>
+      <a href="{% url 'about' %}" class="story-link">Meet the Family →</a>
     </div>
-  </section>
+  </div>
+
+  <!-- Hours Strip -->
+  <div class="hours-strip scroll-animate">
+    <div class="hours-item">
+      <span class="label">Open</span>
+      <span class="value">6 Days a Week</span>
+    </div>
+    <div class="hours-divider"></div>
+    <div class="hours-item">
+      <span class="label">Location</span>
+      <span class="value">Destin, Florida</span>
+    </div>
+    <div class="hours-divider"></div>
+    <div class="hours-item">
+      <span class="label">Reservations</span>
+      <span class="value">Walk-ins Welcome</span>
+    </div>
+  </div>
+
+  <!-- Reserve CTA -->
+  <div class="reserve-section scroll-animate">
+    <span class="eyebrow">Book a Table</span>
+    <h2>Reserve Your Experience</h2>
+    <p>Enjoy an intercontinental dining journey on Florida's Emerald Coast.</p>
+    <a href="{% url 'reservation' %}" class="btn-primary">Reserve a Table</a>
+  </div>
+
 {% endblock %}
