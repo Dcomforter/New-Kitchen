@@ -875,3 +875,74 @@ main {
   margin: 0;
   padding: 0;
 }
+
+/* =============================================
+   FINAL POLISH
+   ============================================= */
+
+/* NAV — constrain logo height */
+.logo img {
+  max-height: 52px;
+  width: auto;
+}
+
+/* HERO — prevent awkward line break on italic */
+.hero-content h1 {
+  max-width: 600px;
+}
+
+/* Ensure hero content never gets too wide on ultrawide screens */
+.hero-content {
+  max-width: 700px;
+}
+
+/* STORY — show faces not torsos */
+.story-image img {
+  object-position: center top;
+}
+
+/* Ensure story section never collapses */
+.story-section {
+  min-height: 500px;
+}
+
+/* MENU PREVIEW — add bottom link */
+.menu-preview-footer {
+  text-align: center;
+  margin: 0 3rem 4rem;
+  padding-top: 1.5rem;
+}
+
+.menu-preview-footer a {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 3px;
+  transition: color 0.2s;
+}
+
+.menu-preview-footer a:hover {
+  color: var(--dark);
+  border-color: var(--dark);
+  text-decoration: none;
+}
+
+/* HOURS — make dividers taller and more elegant */
+.hours-divider {
+  height: 60px;
+  background: var(--border);
+}
+
+/* RESERVE button — slightly wider */
+.reserve-section .btn-primary {
+  padding: 1rem 3rem;
+  font-size: 0.88rem;
+}
+
+/* FOOTER — tighten logo spacing */
+footer img {
+  max-height: 36px;
+  opacity: 0.75;
+}
