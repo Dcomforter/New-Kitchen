@@ -1,17 +1,19 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const elements = document.querySelectorAll(".scroll-animate");
+document.addEventListener('DOMContentLoaded', function () {
+  const targets = document.querySelectorAll('.scroll-animate');
 
-  function checkPosition() {
-    const windowHeight = window.innerHeight;
-    elements.forEach((el) => {
-      const positionFromTop = el.getBoundingClientRect().top;
-      if (positionFromTop - windowHeight <= -100) {
-        el.classList.add("animate-fade");
-      }
-    });
-  }
+  const observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
 
-  window.addEventListener("scroll", checkPosition);
-  window.addEventListener("resize", checkPosition);
-  checkPosition();
+  targets.forEach(function (el) {
+    observer.observe(el);
+  });
 });
