@@ -821,3 +821,57 @@ footer img {
 .text-center { text-align: center; }
 .mt-1 { margin-top: 1rem; }
 .mt-2 { margin-top: 2rem; }
+
+/* ---- CRITICAL FIXES ---- */
+
+/* Remove old body margin entirely */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Hero must stretch full width */
+#hero {
+  width: 100%;
+  min-height: 85vh;
+}
+
+/* Buttons inside hero must be visible immediately — no scroll-animate */
+.hero-actions .btn-primary,
+.hero-actions .btn-ghost {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Story section: ensure dark background always shows */
+.story-section {
+  opacity: 1 !important;
+  transform: none !important;
+  background: var(--dark);
+  width: 100%;
+}
+
+/* Hours strip always visible */
+.hours-strip {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Promo banner full width */
+.promo-banner {
+  width: 100%;
+  margin: 0;
+}
+
+/* Nav container full width */
+header {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Main has no extra margin */
+main {
+  margin: 0;
+  padding: 0;
+}
