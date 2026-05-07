@@ -2,36 +2,104 @@
 {% load static %}
 
 {% block content %}
-<section class="reservation-section">
-  <article class="container">
-    <div class="row">
-      
-      <!-- Reservation Form -->
-      <div class="col-md-6 col-sm-12 reservation-form">
-        {% if not reservation_successful %}
-        <h2>Reserve a Table Now!</h2>
-        <form action="" method="post" class="form">
+
+  <!-- Page Header -->
+  <div class="page-hero" style="padding: 3rem 4rem 2.5rem;">
+    <span class="eyebrow">Dcomforters' Kitchen</span>
+    <h1>Reserve a Table</h1>
+    <p>Book your seat and let us take care of the rest.</p>
+  </div>
+
+  <div class="reservation-wrapper">
+
+    {% if not reservation_successful %}
+
+    <div class="reservation-grid">
+
+      <!-- Form -->
+      <div class="reservation-form-panel">
+        <h2 class="checkout-section-title">Your Details</h2>
+
+        <form action="" method="post" class="res-form">
           {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" id="button" class="btn">Submit</button>
+
+          {% for field in form %}
+            <div class="form-field">
+              <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+                {% if field.field.required %}
+                  <span class="field-required">*</span>
+                {% endif %}
+              </label>
+              {{ field }}
+              {% if field.errors %}
+                <span class="field-error">{{ field.errors|join:", " }}</span>
+              {% endif %}
+            </div>
+          {% endfor %}
+
+          <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 0.9rem; margin-top: 0.5rem;">
+            Confirm Reservation
+          </button>
+
+          <p class="checkout-disclaimer">
+            We'll confirm your reservation by email. For same-day bookings please call us directly.
+          </p>
         </form>
-        {% else %}
-        <h2>Confirmation</h2>
-        <p class="success-message">Reservation Successful!</p>
-        {% endif %}
       </div>
 
-      <!-- Google Maps Embed -->
-      <div class="col-md-6 col-sm-12 map-container">
-        <div class="embed-responsive embed-responsive-4by3">
+      <!-- Map + Info -->
+      <div class="reservation-map-panel">
+        <h2 class="checkout-section-title">Find Us</h2>
+
+        <!-- Info strip -->
+        <div class="res-info-strip">
+          <div class="res-info-item">
+            <span class="res-info-label">Location</span>
+            <span class="res-info-value">Destin, Florida</span>
+          </div>
+          <div class="res-info-item">
+            <span class="res-info-label">Open</span>
+            <span class="res-info-value">6 Days a Week</span>
+          </div>
+          <div class="res-info-item">
+            <span class="res-info-label">Walk-ins</span>
+            <span class="res-info-value">Welcome</span>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="res-map">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d130960.83790283036!2d-86.61275057523757!3d30.396658008520536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88914379c940f4b7%3A0x17a48bdb46584c32!2sDestin%2C%20FL%2032541%2C%20USA!5e0!3m2!1sen!2spt!4v1699306117028!5m2!1sen!2spt"
-            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+            width="100%"
+            height="100%"
+            style="border: 0; display: block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
       </div>
 
     </div>
-  </article>
-</section>
+
+    {% else %}
+
+      <!-- Success State -->
+      <div class="success-page">
+        <div class="success-icon">✓</div>
+        <span class="eyebrow">Booking Confirmed</span>
+        <h1>You're all set!</h1>
+        <p>Your reservation has been placed successfully.<br>We look forward to welcoming you.</p>
+        <div class="success-actions">
+          <a href="{% url 'home' %}" class="btn-primary">Back to Home</a>
+          <a href="{% url 'kitchen' %}" class="btn-outline">Browse the Menu</a>
+        </div>
+      </div>
+
+    {% endif %}
+
+  </div>
+
 {% endblock %}
