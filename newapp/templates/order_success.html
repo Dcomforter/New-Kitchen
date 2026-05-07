@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<section>
-  <article>
+
+  <div class="success-page">
+
+    <div class="success-icon">✓</div>
+
+    <span class="eyebrow">Order Confirmed</span>
     <h1>Thank You!</h1>
-    <p>Your order has been placed successfully. We’ll get started right away!</p>
-    <a href="{% url 'kitchen' %}" class="cta-button">Back to Menu</a>
-  </article>
-</section>
+    <p>Your order has been placed successfully.<br>We'll get started right away!</p>
+
+    <div class="success-actions">
+      <a href="{% url 'kitchen' %}" class="btn-primary">Back to Menu</a>
+      <a href="{% url 'home' %}" class="btn-outline">Go to Homepage</a>
+    </div>
+
+  </div>
+
 {% endblock %}
