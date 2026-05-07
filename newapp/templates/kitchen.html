@@ -1,23 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<section>
-  <article>
+
+  <!-- Page Header -->
+  <div class="page-hero">
+    <span class="eyebrow">Dcomforters' Kitchen</span>
     <h1>Our Menu</h1>
-    <div class="menu-grid">
-      {% for item in menu %}
-        <div class="menu-card">
-        <a href="{% url 'menu_details' item.id %}">
-            <img src="{% static 'img/menu_items/' %}{{ item.food_name }}.jpg" alt="{{ item.food_name }}">
-            <div class="menu-card-content">
-            <h3>{{ item.food_name }}</h3>
-            <p class="cuisine-type">{{ item.cuisine }}</p>
-            <p class="menu-price">${{ item.price }}</p>
-            </div>
-        </a>
+    <p>Nigerian, African &amp; Intercontinental dishes crafted with tradition and care.</p>
+  </div>
+
+  <!-- Menu Grid -->
+  <div class="kitchen-grid">
+    {% for item in menu %}
+      <a href="{% url 'menu_details' item.id %}" class="kitchen-card">
+        <div class="kitchen-card-img">
+          <img src="{% static 'img/menu_items/' %}{{ item.food_name }}.jpg" alt="{{ item.food_name }}">
         </div>
-      {% endfor %}
-    </div>
-  </article>
-</section>
+        <div class="kitchen-card-body">
+          <span class="cuisine">{{ item.cuisine }}</span>
+          <h3>{{ item.food_name }}</h3>
+          <div class="kitchen-card-footer">
+            <span class="price">${{ item.price }}</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- CTA Strip -->
+  <div class="kitchen-cta">
+    <p>Ready to dine? Reserve your table and experience the flavours of Nigeria in Florida.</p>
+    <a href="{% url 'reservation' %}" class="btn-primary">Reserve a Table</a>
+  </div>
+
 {% endblock %}
