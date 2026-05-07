@@ -1,55 +1,59 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<section>
-  <article>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <span class="eyebrow">Our Story</span>
     <h1>About Us</h1>
-    <!--Begin row-->
-    <div class="row">
-      <!--Begin col-->
-      <div class="column">
-        <p>
-          Based in Destin, Florida, Dcomforters' Kitchen is a family owned
-          Nigerian Restaurant, focused not only on providing excellent services but also creating an unforgettable 
-          experience to the senses of our prestigious customers. 
-        </p>
-        <p>
-          Our culinary artisans draw inspiration from Nigerian, Western African, and Intercontinental dishes
-          and have a diverse menu which features a symphony of flavors meticulously crafted to tantalize your taste buds.
-        </p>
+    <p>A family kitchen built on passion, heritage, and the joy of feeding people well.</p>
+  </div>
 
-        <p>
-          The kitchen has a rustic and relaxed atmosphere with moderate
-          prices, making it a go-to place for a meal any time of the day.
-        </p>
-
-        <p>
-          Dcomforters' Kitchen is owned by a Nigerian couple, Israel and Precious, who
-          moved to the United States to pursue their shared dream of providing excellent
-          services to the world around them.
-        </p>
-
-        <p>
-          Our goal is to remain at the forefront of providing excellent services to everyone who comes 
-          visiting us and ensure they have an experience that is beyond just suppressing their hunger
-          with a meal.
-        </p>
-      </div>
-      <!--End col-->
-
-      <!--Begin col-->
-      <div class="column">
-        <figure class="figure">
-          <img
-            src="{% static 'img/Israel-and-Precious.jpg' %}"
-            alt="Israel and Precious"
-          />
-          <figcaption class="figure-caption">
-            Dcomforters' Kitchen owners, Israel and Precious.
-          </figcaption>
-        </figure>
-      </div>
-      <!--End col-->
+  <!-- Story Split -->
+  <div class="about-split">
+    <div class="about-image">
+      <img src="{% static 'img/Israel-and-Precious.jpg' %}" alt="Israel and Precious, owners of Dcomforters' Kitchen" />
     </div>
-    <!--End row-->
-  </article>
-</section>
+    <div class="about-text">
+      <span class="eyebrow">Who We Are</span>
+      <h2>Nigerian Heart,<br>Florida Soul</h2>
+      <p>Based in Destin, Florida, Dcomforters' Kitchen is a family owned Nigerian restaurant, focused not only on providing excellent service but also creating an unforgettable experience for every guest.</p>
+      <p>Our culinary artisans draw inspiration from Nigerian, West African, and Intercontinental dishes — crafting a diverse menu of flavours meticulously designed to tantalize your taste buds.</p>
+    </div>
+  </div>
+
+  <!-- Values Strip -->
+  <div class="about-values">
+    <div class="about-value">
+      <span class="about-value-num">01</span>
+      <h3>Rustic Atmosphere</h3>
+      <p>A relaxed, welcoming space with moderate prices — a go-to place any time of the day.</p>
+    </div>
+    <div class="about-value">
+      <span class="about-value-num">02</span>
+      <h3>Family Owned</h3>
+      <p>Israel and Precious moved from Nigeria to pursue their shared dream of serving the world around them.</p>
+    </div>
+    <div class="about-value">
+      <span class="about-value-num">03</span>
+      <h3>Beyond a Meal</h3>
+      <p>Our goal is an experience beyond hunger — one that stays with you long after you leave.</p>
+    </div>
+  </div>
+
+  <!-- Owners Feature -->
+  <div class="about-owners">
+    <div class="about-owners-text">
+      <span class="eyebrow">The Founders</span>
+      <h2>Israel &amp; Precious</h2>
+      <p>A Nigerian couple with a shared dream — to bring the warmth, flavour, and hospitality of Nigerian culture to the heart of Florida's Emerald Coast.</p>
+      <p>Every dish served at Dcomforters' Kitchen carries a piece of their story, their heritage, and their love for bringing people together around great food.</p>
+      <a href="{% url 'reservation' %}" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;">Dine With Us</a>
+    </div>
+    <div class="about-owners-image">
+      <img src="{% static 'img/Israel-and-Precious.jpg' %}" alt="Israel and Precious" />
+      <div class="about-owners-caption">Israel &amp; Precious — Destin, Florida</div>
+    </div>
+  </div>
+
 {% endblock %}
