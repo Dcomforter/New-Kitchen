@@ -204,7 +204,7 @@ main article {
   align-items: flex-end;
   background-image:
     linear-gradient(to top, rgba(26,18,8,0.88) 0%, rgba(26,18,8,0.15) 60%),
-    url('../img/restaurant_inside.jpg');
+    url('../img/menu-items.jpg');
   background-size: cover;
   background-position: center;
   padding: 0;
