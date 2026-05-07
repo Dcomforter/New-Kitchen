@@ -1,35 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Your Order Cart</h1>
 
-{% if cart_items %}
-  <ul id="cart-list">
-    {% for item in cart_items %}
-      <li data-item-id="{{ item.menu_item.id }}">
-        <strong>{{ item.menu_item.food_name }}</strong><br> 
-        Quantity: 
-        <button class="decrease-qty" data-id="{{ item.menu_item.id }}">−</button>
-        <span class="item-qty">{{ item.quantity }}</span>
-        <button class="increase-qty" data-id="{{ item.menu_item.id }}">+</button><br>
-        Notes: {{ item.notes|default:"None" }}<br>
-        Total: $<span class="item-total">{{ item.subtotal }}</span>
-        <a href="{% url 'remove_from_cart' item.menu_item.id %}">Remove</a><br><br>
-      </li>
-    {% endfor %}
-  </ul>
+  <!-- Page Header -->
+  <div class="page-hero" style="padding: 3rem 4rem 2.5rem;">
+    <span class="eyebrow">Your Order</span>
+    <h1>Order Cart</h1>
+  </div>
 
-  <h3>Grand Total: $<span id="grand-total">
-    {{ grand_total }}
-  </span></h3>
+  <div class="cart-wrapper">
 
-  <form method="post" action="{% url 'submit_order' %}">
-    {% csrf_token %}
-    <a href="{% url 'checkout' %}" class="cta-button animate-bounce">Proceed to Checkout</a>
-    <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Add More Items</a>
-  </form>
-{% else %}
-  <p>Your cart is empty. <a href="{% url 'kitchen' %}" class="cta-button animate-bounce">Browse Menu</a></p>
-{% endif %}
+    {% if cart_items %}
+
+      <!-- Cart Items -->
+      <div class="cart-items" id="cart-list">
+        {% for item in cart_items %}
+          <div class="cart-row" data-item-id="{{ item.menu_item.id }}">
+            <div class="cart-row-info">
+              <h3>{{ item.menu_item.food_name }}</h3>
+              {% if item.notes %}
+                <p class="cart-notes">{{ item.notes }}</p>
+              {% endif %}
+            </div>
+
+            <div class="cart-row-controls">
+              <button class="qty-btn decrease-qty" data-id="{{ item.menu_item.id }}" aria-label="Decrease">−</button>
+              <span class="item-qty">{{ item.quantity }}</span>
+              <button class="qty-btn increase-qty" data-id="{{ item.menu_item.id }}" aria-label="Increase">+</button>
+            </div>
+
+            <div class="cart-row-price">
+              $<span class="item-total">{{ item.subtotal }}</span>
+            </div>
+
+            <a href="{% url 'remove_from_cart' item.menu_item.id %}" class="cart-remove" aria-label="Remove item">✕</a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Grand Total -->
+      <div class="cart-total-bar">
+        <span class="cart-total-label">Grand Total</span>
+        <span class="cart-total-value">$<span id="grand-total">{{ grand_total }}</span></span>
+      </div>
+
+      <!-- Actions -->
+      <div class="cart-actions">
+        <a href="{% url 'checkout' %}" class="btn-primary">Proceed to Checkout</a>
+        <a href="{% url 'kitchen' %}" class="btn-outline">Add More Items</a>
+      </div>
+
+    {% else %}
+
+      <!-- Empty State -->
+      <div class="cart-empty">
+        <p class="cart-empty-icon">🍽️</p>
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything yet.</p>
+        <a href="{% url 'kitchen' %}" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;">Browse Our Menu</a>
+      </div>
+
+    {% endif %}
+
+  </div>
+
 {% endblock %}
 
 {% block extra_js %}
@@ -51,13 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify({ action })
       })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network error');
-        }
+        if (!response.ok) throw new Error('Network error');
         return response.json();
       })
       .then(data => {
-        const itemEl = document.querySelector(`li[data-item-id="${itemId}"]`);
+        const itemEl = document.querySelector(`[data-item-id="${itemId}"]`);
         itemEl.querySelector('.item-qty').textContent = data.quantity;
         itemEl.querySelector('.item-total').textContent = data.subtotal;
         updateGrandTotal();
@@ -77,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('grand-total').textContent = total.toFixed(2);
   }
 
-  // CSRF helper
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -94,5 +124,4 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
-
 {% endblock %}
