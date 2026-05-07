@@ -199,7 +199,7 @@ main article {
    ============================================= */
 #hero {
   position: relative;
-  min-height: 88vh;
+  min-height: 75vh;
   display: flex;
   align-items: flex-end;
   background-image:
