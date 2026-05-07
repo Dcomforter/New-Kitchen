@@ -946,3 +946,162 @@ footer img {
   max-height: 36px;
   opacity: 0.75;
 }
+
+/* =============================================
+   KITCHEN / MENU PAGE
+   ============================================= */
+
+/* Page Hero — shared across inner pages */
+.page-hero {
+  background: var(--dark);
+  padding: 5rem 4rem 4rem;
+  text-align: center;
+}
+
+.page-hero .eyebrow {
+  color: var(--gold-light);
+  margin-bottom: 0.75rem;
+}
+
+.page-hero h1 {
+  color: #fff;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.05;
+}
+
+.page-hero p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Kitchen Grid */
+.kitchen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 3rem;
+}
+
+.kitchen-card {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.kitchen-card:hover {
+  background: var(--warm);
+  text-decoration: none;
+}
+
+.kitchen-card-img {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.kitchen-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.kitchen-card:hover .kitchen-card-img img {
+  transform: scale(1.04);
+}
+
+.kitchen-card-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.kitchen-card-body .cuisine {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: var(--font-sans);
+}
+
+.kitchen-card-body h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--dark);
+  margin: 0;
+}
+
+.kitchen-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.kitchen-card-footer .price {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--gold);
+  font-family: var(--font-sans);
+}
+
+.kitchen-card-footer .arrow {
+  color: var(--muted);
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.kitchen-card:hover .kitchen-card-footer .arrow {
+  transform: translateX(4px);
+}
+
+/* Kitchen CTA strip at bottom */
+.kitchen-cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid var(--border);
+  background: var(--warm);
+}
+
+.kitchen-cta p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+/* Fix: override old section/article styles for kitchen page */
+.kitchen-grid ~ * { }
+
+/* Neutralise the old section flex for pages using new layout */
+section:has(.kitchen-grid),
+section:has(.page-hero) {
+  display: block;
+  gap: 0;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .kitchen-grid {
+    margin: 1.5rem 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .page-hero {
+    padding: 3.5rem 1.5rem 3rem;
+  }
+}
