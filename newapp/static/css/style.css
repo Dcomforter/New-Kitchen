@@ -61,6 +61,20 @@ a:hover { color: var(--dark); }
 
 img { display: block; max-width: 100%; height: auto; }
 
+/* Neutralise legacy section/article defaults for new page layouts */
+section {
+  display: block;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+main article {
+  border: none;
+  padding: 0;
+  flex: unset;
+}
+
 /* =============================================
    NAVIGATION
    ============================================= */
