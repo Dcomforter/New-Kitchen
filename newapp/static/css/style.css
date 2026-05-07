@@ -1765,3 +1765,57 @@ section:has(.page-hero) {
     margin: 2rem auto 4rem;
   }
 }
+
+/* =============================================
+   ORDER SUCCESS PAGE
+   ============================================= */
+
+.success-page {
+  text-align: center;
+  padding: 7rem 2rem 8rem;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #fff;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.success-page .eyebrow {
+  margin-bottom: 0.5rem;
+}
+
+.success-page h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--dark);
+  margin-bottom: 0.75rem;
+}
+
+.success-page p {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
