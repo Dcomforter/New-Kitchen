@@ -2,58 +2,86 @@
 {% load static %}
 
 {% block content %}
-<section class="checkout-section">
-  <article>
+
+  <!-- Page Header -->
+  <div class="page-hero" style="padding: 3rem 4rem 2.5rem;">
+    <span class="eyebrow">Almost There</span>
     <h1>Checkout</h1>
+  </div>
+
+  <div class="checkout-wrapper">
 
     {% if cart_items %}
-      <form method="post" action="{% url 'submit_order' %}">
-        {% csrf_token %}
+    <form method="post" action="{% url 'submit_order' %}">
+      {% csrf_token %}
 
-        <div class="cart-summary">
-          <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in cart_items %}
-                <tr>
-                  <td>{{ item.menu_item.food_name }}</td>
-                  <td>{{ item.quantity }}</td>
-                  <td>${{ item.menu_item.price }}</td>
-                  <td>${{ item.subtotal }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <p><strong>Total:</strong> ${{ total }}</p>
+      <div class="checkout-grid">
+
+        <!-- Order Summary -->
+        <div class="checkout-summary">
+          <h2 class="checkout-section-title">Order Summary</h2>
+
+          <div class="checkout-items">
+            {% for item in cart_items %}
+              <div class="checkout-item">
+                <div class="checkout-item-info">
+                  <span class="checkout-item-name">{{ item.menu_item.food_name }}</span>
+                  <span class="checkout-item-qty">× {{ item.quantity }}</span>
+                </div>
+                <span class="checkout-item-price">${{ item.subtotal }}</span>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="checkout-total">
+            <span class="checkout-total-label">Total</span>
+            <span class="checkout-total-value">${{ total }}</span>
+          </div>
         </div>
 
-        <div class="customer-info">
-          <h2>Customer Information</h2>
+        <!-- Customer Info -->
+        <div class="checkout-form">
+          <h2 class="checkout-section-title">Your Details</h2>
 
-          <label for="customer_name">Full Name:</label>
-          <input type="text" name="customer_name" id="customer_name" required>
+          <div class="form-field">
+            <label for="customer_name">Full Name</label>
+            <input type="text" name="customer_name" id="customer_name" placeholder="Israel Adeyemi" required>
+          </div>
 
-          <label for="customer_email">Email:</label>
-          <input type="email" name="customer_email" id="customer_email" required>
+          <div class="form-field">
+            <label for="customer_email">Email Address</label>
+            <input type="email" name="customer_email" id="customer_email" placeholder="you@example.com" required>
+          </div>
 
-          <label for="order_notes">Order Notes (optional):</label>
-          <textarea name="order_notes" id="order_notes" rows="4"></textarea>
+          <div class="form-field">
+            <label for="order_notes">
+              Order Notes
+              <span class="label-optional">(optional)</span>
+            </label>
+            <textarea name="order_notes" id="order_notes" rows="4" placeholder="Any special requests or delivery instructions?"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 1rem; font-size: 0.9rem;">
+            Place Order
+          </button>
+
+          <p class="checkout-disclaimer">
+            By placing your order you agree to our terms. You'll receive a confirmation at the email provided.
+          </p>
         </div>
 
-        <div class="form-actions">
-          <button type="submit" class="cta-button">Place Order</button>
-        </div>
-      </form>
+      </div>
+    </form>
+
     {% else %}
-      <p>Your cart is currently empty. <a href="{% url 'kitchen' %}">Go back to the menu</a>.</p>
+      <div class="cart-empty">
+        <p class="cart-empty-icon">🛒</p>
+        <h2>Nothing to check out</h2>
+        <p>Your cart is empty. Add some dishes first.</p>
+        <a href="{% url 'kitchen' %}" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;">Browse Our Menu</a>
+      </div>
     {% endif %}
-  </article>
-</section>
+
+  </div>
+
 {% endblock %}
