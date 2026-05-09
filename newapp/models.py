@@ -33,6 +33,7 @@ class Menu(models.Model):
     prep_time = models.IntegerField(default=25)
     calories = models.IntegerField(default=1000)
     image = models.ImageField(upload_to='newapp/static/img/menu_items/', null=True, blank=True)
+    is_featured = models.BooleanField(default=False)
     
     def __str__(self):
         return (
