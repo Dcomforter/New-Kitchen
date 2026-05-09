@@ -11,6 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['fulfilled', 'created_at']
     search_fields = ['customer_name', 'customer_email']
     readonly_fields = ('subtotal',)
+    list_editable = ['is_featured']  # toggle directly from the list view
 
 
 # Register your models here.
