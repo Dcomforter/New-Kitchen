@@ -2159,3 +2159,17 @@ section:has(.page-hero) {
     border-bottom: none;
   }
 }
+
+/* Compact page hero for inner pages */
+.page-hero {
+  padding: 2.5rem 4rem 2rem;
+}
+
+.page-hero h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+
+.page-hero p {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
