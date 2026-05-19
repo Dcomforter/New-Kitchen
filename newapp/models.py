@@ -1,6 +1,11 @@
 from django.db import models
 from django_countries.fields import CountryField
 
+SEX_CHOICES = [
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+]
+
 # Create your models here.
 class Booking(models.Model):
     first_name = models.CharField(max_length=50)

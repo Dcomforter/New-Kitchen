@@ -1,7 +1,18 @@
 from django import forms
 from .models import Booking, Order
 
+SEX_CHOICES = [
+    ('', '-- Select --'),
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+]
+
 class BookingForm(forms.ModelForm):
+    sex = forms.ChoiceField(
+        choices=SEX_CHOICES,
+        widget=forms.Select()
+    )
+    
     class Meta:
         model = Booking
         fields = "__all__"
