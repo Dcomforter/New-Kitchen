@@ -10,7 +10,7 @@ SEX_CHOICES = [
 class Booking(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    sex = models.CharField(max_length=15)
+    sex = models.CharField(max_length=15, choices=SEX_CHOICES)
     email = models.EmailField(null=True)
     #phone_number = models.IntegerField(null=True)
     phone_number = models.CharField(max_length=10, null=True)
