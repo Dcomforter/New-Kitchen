@@ -83,6 +83,5 @@ media/             # User-uploaded images (Menu.image field)
 
 ## Notable Issues to Be Aware Of
 
-- `views.py` contains several debug `print()` statements with emoji (lines 163, 173, 176, 202, 204) in `checkout` and `submit_order` — remove before production deployments.
 - `SECRET_KEY` in `settings.py` is hardcoded and should be moved to an environment variable for any non-local deployment.
 - `ALLOWED_HOSTS = ['*']` in settings — restrict this in production.
