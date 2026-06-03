@@ -160,20 +160,17 @@ def update_quantity(request, item_id):
 
 def checkout(request):
     cart = Cart(request)
-    print("🧺 CART CONTENT @checkout:", cart)
     cart_items = cart.items()
     total = sum(item['subtotal'] for item in cart_items)
-    
+
     return render(request, 'checkout.html', {
         'cart_items': cart_items,
         'total': total
     })
 
 def submit_order(request):
-    print("🛎️ submit_order view was called")  # Should always print
     cart = request.session.get('cart', {})
     if not cart:
-        print("⚠️ Cart is empty at submit_order.")
         return redirect('view_cart')
 
     if request.method == 'POST':
@@ -182,7 +179,7 @@ def submit_order(request):
         order_notes = request.POST.get('order_notes', '')
 
         for item_id, item in cart.items():
-            menu_item = get_object_or_404(Menu, id=int(item_id))  # ✅ Cast item_id to int
+            menu_item = get_object_or_404(Menu, id=int(item_id))
             dynamic_note_key = f"notes_{item_id}"
             order_notes = request.POST.get(dynamic_note_key, item.get('order_notes', ''))
 
@@ -195,13 +192,9 @@ def submit_order(request):
                 fulfilled=False,
             )
 
-        # ✅ Clear cart after order
         if 'cart' in request.session:
             del request.session['cart']
             request.session.modified = True
-            print("✅ Cart cleared successfully")
-        else:
-            print("⚠️ Cart key not found in session")
 
         return render(request, 'order_success.html', {
             'customer_name': customer_name
