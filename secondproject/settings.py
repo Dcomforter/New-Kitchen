@@ -42,8 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'newapp',
     'django_countries',
+    'rest_framework',
     #'storages'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

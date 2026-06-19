@@ -4,10 +4,7 @@ from newapp.forms import BookingForm, OrderForm
 from newapp.models import Menu, Order
 from django.template import loader
 from .cart import Cart
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
 from django.contrib import messages
-import json
 
 # Create your views here.
 def home(request):
@@ -131,32 +128,6 @@ def remove_from_cart(request, item_id):
     cart = Cart(request)
     cart.remove(item_id)
     return redirect('view_cart')
-
-@require_POST
-def update_quantity(request, item_id):
-    cart = Cart(request)
-    item_id = str(item_id)
-    data = json.loads(request.body)
-    action = data.get('action')
-
-    if item_id not in cart.cart:
-        return JsonResponse({'error': 'Item not in cart'}, status=400)
-
-    if action == 'increase':
-        cart.cart[item_id]['quantity'] += 1
-    elif action == 'decrease':
-        cart.cart[item_id]['quantity'] = max(1, cart.cart[item_id]['quantity'] - 1)
-    else:
-        return JsonResponse({'error': 'Invalid action'}, status=400)
-
-    cart.save()
-
-    from .models import Menu
-    item = Menu.objects.get(id=item_id)
-    quantity = cart.cart[item_id]['quantity']
-    subtotal = quantity * item.price
-
-    return JsonResponse({'quantity': quantity, 'subtotal': f"{subtotal:.2f}"})
 
 def checkout(request):
     cart = Cart(request)

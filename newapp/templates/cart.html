@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const itemId = this.dataset.id;
       const action = this.classList.contains('increase-qty') ? 'increase' : 'decrease';
 
-      fetch(`/cart/update_quantity/${itemId}/`, {
-        method: 'POST',
+      fetch(`/api/cart/items/${itemId}/`, {
+        method: 'PATCH',
         headers: {
           'X-CSRFToken': csrftoken,
           'Content-Type': 'application/json'

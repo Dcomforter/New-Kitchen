@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', views.home, name='home'),
     path('', include('newapp.urls')),
+    path('api/', include('newapp.api_urls')),
     # url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     # path('kitchen/', views.kitchen, name='kitchen'),
     # path('reservation/', views.form_view),
