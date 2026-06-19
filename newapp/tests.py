@@ -76,8 +76,8 @@ class MenuAPITest(TestCase):
         response = self.client.get(reverse('api_menu_list'))
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(len(data), 1)
-        self.assertEqual(data[0]['food_name'], "Jollof Rice")
+        self.assertEqual(data['count'], 1)
+        self.assertEqual(data['results'][0]['food_name'], "Jollof Rice")
 
     def test_menu_order_creates_fulfilled_order(self):
         response = self.client.post(

@@ -12,7 +12,7 @@ class MenuListAPIView(generics.ListAPIView):
     serializer_class = MenuSerializer
 
     def get_queryset(self):
-        queryset = Menu.objects.all()
+        queryset = Menu.objects.order_by('id')
         featured = self.request.query_params.get('featured')
         if featured is not None:
             queryset = queryset.filter(is_featured=featured.lower() in ('1', 'true', 'yes'))
