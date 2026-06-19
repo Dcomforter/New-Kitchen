@@ -13,7 +13,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['fulfilled', 'created_at']
     search_fields = ['customer_name', 'customer_email']
     readonly_fields = ('subtotal',)
-    
+    list_per_page = 10
+
 
 # Register your models here.
 admin.site.register(Booking)
