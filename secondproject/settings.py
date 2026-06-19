@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6epzh+g=xc=i45)r_iavwsow9hqeyea_b3n)ew3mp+07=pkt7n'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-6epzh+g=xc=i45)r_iavwsow9hqeyea_b3n)ew3mp+07=pkt7n',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -155,8 +159,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / "media"  # Assuming you have a 'media' directory in your project
-
-import os
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
