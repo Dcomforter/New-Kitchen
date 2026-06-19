@@ -16,6 +16,9 @@ class OrderAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_per_page = 10
+
 # Register your models here.
-admin.site.register(Booking)
 # admin.site.register(Menu)
