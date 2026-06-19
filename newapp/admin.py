@@ -6,6 +6,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ['food_name', 'cuisine', 'price', 'is_featured']
     list_editable = ['is_featured']  # toggle directly from the list view
     list_filter = ['is_featured', 'cuisine']
+    list_per_page = 10
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
