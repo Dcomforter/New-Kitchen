@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from newapp.models import Booking, Menu, Order
 
 @admin.register(Menu)
@@ -15,6 +17,13 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ['customer_name', 'customer_email']
     readonly_fields = ('subtotal',)
     list_per_page = 10
+    actions = ['print_ticket']
+
+    def print_ticket(self, request, queryset):
+        ids = ','.join(str(pk) for pk in queryset.values_list('id', flat=True))
+        url = reverse('print_tickets')
+        return HttpResponseRedirect(f"{url}?ids={ids}")
+    print_ticket.short_description = "Print kitchen ticket(s)"
 
 
 @admin.register(Booking)

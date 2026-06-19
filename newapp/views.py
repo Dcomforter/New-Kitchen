@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib.admin.views.decorators import staff_member_required
 from newapp.forms import BookingForm, OrderForm
 from newapp.models import Menu, Order
 from django.template import loader
@@ -172,4 +173,11 @@ def submit_order(request):
         })
 
     return redirect('checkout')
+
+@staff_member_required
+def print_tickets(request):
+    ids = request.GET.get('ids', '')
+    order_ids = [int(i) for i in ids.split(',') if i.isdigit()]
+    orders = Order.objects.filter(id__in=order_ids).select_related('menu_item')
+    return render(request, 'order_ticket.html', {'orders': orders})
 

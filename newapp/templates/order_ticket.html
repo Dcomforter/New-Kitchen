@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Kitchen Ticket{{ orders|length|pluralize }}</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #ddd;
+      margin: 0;
+      padding: 1.5rem;
+    }
+
+    .toolbar {
+      max-width: 320px;
+      margin: 0 auto 1rem;
+      text-align: right;
+    }
+
+    .toolbar button {
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+
+    .ticket {
+      width: 320px;
+      margin: 0 auto 1.5rem;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+      page-break-after: always;
+    }
+
+    .ticket:last-child {
+      page-break-after: auto;
+    }
+
+    .ticket h1 {
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 0 0 0.25rem;
+    }
+
+    .ticket .subhead {
+      text-align: center;
+      font-size: 0.85rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .ticket hr {
+      border: none;
+      border-top: 1px dashed #000;
+      margin: 0.5rem 0;
+    }
+
+    .ticket dl {
+      margin: 0;
+    }
+
+    .ticket dt {
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+
+    .ticket dd {
+      margin: 0 0 0.25rem;
+    }
+
+    .ticket .item-line {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    .no-orders {
+      text-align: center;
+      font-family: sans-serif;
+      color: #555;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .toolbar {
+        display: none;
+      }
+
+      .ticket {
+        box-shadow: none;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <button onclick="window.print()">Print</button>
+  </div>
+
+  {% if orders %}
+    {% for order in orders %}
+      <div class="ticket">
+        <h1>Dcomforters' Kitchen</h1>
+        <p class="subhead">Order #{{ order.id }} &middot; {{ order.created_at }}</p>
+        <hr>
+        <p class="item-line">{{ order.quantity }} x {{ order.menu_item.food_name }}</p>
+        {% if order.order_notes %}
+          <dl>
+            <dt>Notes</dt>
+            <dd>{{ order.order_notes }}</dd>
+          </dl>
+        {% endif %}
+        <hr>
+        <dl>
+          <dt>Customer</dt>
+          <dd>{{ order.customer_name }}</dd>
+          <dt>Status</dt>
+          <dd>{{ order.fulfilled|yesno:"Fulfilled,Unfulfilled" }}</dd>
+        </dl>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="no-orders">No orders selected.</p>
+  {% endif %}
+
+</body>
+</html>
