@@ -82,7 +82,7 @@ Mounted at `/api/` (`secondproject/urls.py` → `newapp/api_urls.py`). Built wit
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
-| `/api/menu/` | GET | List menu items, supports `?featured=true` |
+| `/api/menu/` | GET | List menu items (paginated, 10/page via `?page=`), supports `?featured=true` |
 | `/api/menu/<id>/` | GET | Retrieve one menu item |
 | `/api/menu/<id>/order/` | POST | Create a single order (mirrors `menu_details`, `fulfilled=True`) |
 | `/api/cart/` | GET | Current session cart + grand total |
@@ -93,6 +93,14 @@ Mounted at `/api/` (`secondproject/urls.py` → `newapp/api_urls.py`). Built wit
 **`Order` is intentionally write-only** — there is no GET/list/detail endpoint for orders. Since the site has no authentication anywhere, a public read endpoint would leak other customers' names/emails via ID enumeration. Do not add a read endpoint for `Order` without adding auth first.
 
 **`cart.html`'s quantity +/− buttons call the API directly** (`PATCH /api/cart/items/<id>/`) instead of a Django view — this replaced the old `update_quantity` view, which has been deleted. The rest of the cart flow (`add_to_cart`, `remove_from_cart`, `checkout`, `submit_order`) still uses standard server-rendered views; only this one interaction was rewired to the API.
+
+**Pagination** — `REST_FRAMEWORK['PAGE_SIZE']` is 10, applied globally to DRF list endpoints (so `/api/menu/` returns `{count, next, previous, results}`, not a bare array). The Django admin lists (`MenuAdmin`, `OrderAdmin`, `BookingAdmin`) each set `list_per_page = 10` to match.
+
+## Kitchen Tickets
+
+Staff can print a kitchen ticket for one or more orders from the admin: select orders in `/admin/newapp/order/`, choose the **"Print kitchen ticket(s)"** action, click **Go**. This redirects to `views.print_tickets` (`/orders/tickets/?ids=1,2,3`), which renders `templates/order_ticket.html` — a standalone, receipt-styled page (not extending `base.html`) with one ticket per order, CSS page breaks for printing multiple at once, and a manual "Print" button (`window.print()`).
+
+The ticket view is gated by `@staff_member_required` — it shows customer name/email, and the site has no auth anywhere else, so it must stay admin-only. There's no model change here: tickets are generated on demand from existing `Order` rows, not stored or auto-generated at order-creation time.
 
 ## Models
 
