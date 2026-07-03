@@ -1,0 +1,8 @@
+.git
+.vscode
+*.bkp
+Jenkinsfile*
+nfs.txt
+post-receive
+__pycache__
+*.pyc
