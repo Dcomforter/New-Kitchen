@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/dcomforter/dcomforters-kitchen:${{ github.ref_name }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout config repo
+        uses: actions/checkout@v4
+        with:
+          repository: Dcomforter/dcomforters-kitchen-config
+          token: ${{ secrets.CONFIG_REPO_PAT }}
+
+      - name: Bump image tag
+        run: |
+          sed -i "s|image: ghcr.io/dcomforter/dcomforters-kitchen:.*|image: ghcr.io/dcomforter/dcomforters-kitchen:${{ github.ref_name }}|" \
+            apps/dcomforters/overlays/production/deployment-patch.yaml
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apps/dcomforters/overlays/production/deployment-patch.yaml
+          git commit -m "Bump production image to ${{ github.ref_name }}" || exit 0
+          git push
