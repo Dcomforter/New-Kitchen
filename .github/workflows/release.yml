@@ -2,15 +2,45 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - master
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
+  tag:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.next.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute next version
+        id: next
+        run: |
+          latest=$(git tag --list 'v*.*.*' --sort=-v:refname | head -1)
+          if [ -z "$latest" ]; then
+            next="v1.0.0"
+          else
+            IFS='.' read -r major minor patch <<< "${latest#v}"
+            next="v${major}.${minor}.$((patch + 1))"
+          fi
+          echo "version=$next" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "${{ steps.next.outputs.version }}"
+          git push origin "${{ steps.next.outputs.version }}"
+
   build-and-push:
+    needs: tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,10 +58,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/dcomforter/dcomforters-kitchen:${{ github.ref_name }}
+          tags: ghcr.io/dcomforter/dcomforters-kitchen:${{ needs.tag.outputs.version }}
 
   deploy:
-    needs: build-and-push
+    needs: [tag, build-and-push]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout config repo
@@ -42,7 +72,7 @@ jobs:
 
       - name: Bump image tag
         run: |
-          sed -i "s|image: ghcr.io/dcomforter/dcomforters-kitchen:.*|image: ghcr.io/dcomforter/dcomforters-kitchen:${{ github.ref_name }}|" \
+          sed -i "s|image: ghcr.io/dcomforter/dcomforters-kitchen:.*|image: ghcr.io/dcomforter/dcomforters-kitchen:${{ needs.tag.outputs.version }}|" \
             apps/dcomforters/overlays/production/deployment-patch.yaml
 
       - name: Commit and push
@@ -50,5 +80,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add apps/dcomforters/overlays/production/deployment-patch.yaml
-          git commit -m "Bump production image to ${{ github.ref_name }}" || exit 0
+          git commit -m "Bump production image to ${{ needs.tag.outputs.version }}" || exit 0
           git push
