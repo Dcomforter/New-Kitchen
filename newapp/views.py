@@ -174,6 +174,9 @@ def submit_order(request):
 
     return redirect('checkout')
 
+def boom(request):
+    return HttpResponse(1 / 0)
+
 @staff_member_required
 def print_tickets(request):
     ids = request.GET.get('ids', '')

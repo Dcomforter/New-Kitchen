@@ -18,6 +18,7 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     path('submit_order/', views.submit_order, name='submit_order'),
     path('orders/tickets/', views.print_tickets, name='print_tickets'),
+    path('debug/boom/', views.boom, name='boom'),
 ]
 
 if settings.DEBUG:
