@@ -1,11 +1,5 @@
 name: Release
 
-# Previously tag/build-and-push/deploy ran as three separate needs-chained
-# jobs. Each job boundary means GitHub tears down the runner and provisions
-# a fresh one for the next job -- on 2026-09-04 that handoff cost ~70s
-# between `tag` and `build-and-push` alone, versus ~48s of actual work
-# across all three steps combined. Collapsed into one job/one runner to
-# remove that queuing overhead. See release.yml.bak for the original.
 on:
   push:
     branches:
@@ -16,8 +10,10 @@ permissions:
   packages: write
 
 jobs:
-  release:
+  tag:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.next.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,6 +39,13 @@ jobs:
           git tag "${{ steps.next.outputs.version }}"
           git push origin "${{ steps.next.outputs.version }}"
 
+  build-and-push:
+    needs: tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -55,26 +58,27 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/dcomforter/dcomforters-kitchen:${{ steps.next.outputs.version }}
+          tags: ghcr.io/dcomforter/dcomforters-kitchen:${{ needs.tag.outputs.version }}
 
+  deploy:
+    needs: [tag, build-and-push]
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout config repo
         uses: actions/checkout@v4
         with:
           repository: Dcomforter/dcomforters-kitchen-config
           token: ${{ secrets.CONFIG_REPO_PAT }}
-          path: config-repo
 
       - name: Bump image tag
-        working-directory: config-repo
         run: |
-          sed -i "s|image: ghcr.io/dcomforter/dcomforters-kitchen:.*|image: ghcr.io/dcomforter/dcomforters-kitchen:${{ steps.next.outputs.version }}|" \
+          sed -i "s|image: ghcr.io/dcomforter/dcomforters-kitchen:.*|image: ghcr.io/dcomforter/dcomforters-kitchen:${{ needs.tag.outputs.version }}|" \
             apps/dcomforters/overlays/production/deployment-patch.yaml
 
       - name: Commit and push
-        working-directory: config-repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add apps/dcomforters/overlays/production/deployment-patch.yaml
-          git commit -m "Bump production image to ${{ steps.next.outputs.version }}" || exit 0
+          git commit -m "Bump production image to ${{ needs.tag.outputs.version }}" || exit 0
           git push
